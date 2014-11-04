@@ -1,0 +1,1 @@
+rails g scaffold user name:string mail:string password:string
