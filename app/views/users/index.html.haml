@@ -1,0 +1,13 @@
+:javascript
+  $(document).ready(function(){
+    $("#showlogin").click(function(){
+     alert ('aaa');
+   });
+  });
+%h1 どこからでもアクセス！
+
+%br
+
+= link_to 'New User', new_user_path
+= render 'form'
+または #{link_to 'ログイン', '',{ :id => "showlogin"}} する
