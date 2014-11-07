@@ -11,3 +11,5 @@ git remote add Drobox https://github.com/tkiha/Drobox.git
 git push Drobox master
 
 
+rails generate migration RemoveNameFromUsers name:string
+

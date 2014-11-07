@@ -1,3 +1,11 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$ ->
+  $("#showlogin").click ->
+    $("#dialog").dialog("open")
+    return false
+    # alert 'open'
+$ ->
+  $("#dialog").dialog
+    autoOpen: false
+    modal: true
+  # alert 'ready'
+

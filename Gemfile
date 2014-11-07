@@ -40,6 +40,7 @@ gem 'spring',        group: :development
 gem 'haml-rails'
 gem 'erb2haml'
 gem 'devise'
+gem 'jquery-ui-rails'
 
 group :development, :test do
     gem "rspec-rails"
