@@ -45,4 +45,5 @@ gem 'jquery-ui-rails'
 group :development, :test do
     gem "rspec-rails"
     gem 'capybara'  
+    gem 'quiet_assets'
 end

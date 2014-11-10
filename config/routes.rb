@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root :to => 'top#index'
+  root :to => 'iusers#index'
   resources :users
 
 end
