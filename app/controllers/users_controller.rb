@@ -1,12 +1,17 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @users = User.all
-     @user = User.new
- end
+  def test
+    respond_to do |format|
+      format.js
+    end
+  end
 
   def show
+  end
+
+  def index
+    @user = User.new
   end
 
   def new
@@ -23,6 +28,7 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
+        format.js 
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }

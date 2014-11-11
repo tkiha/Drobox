@@ -41,6 +41,7 @@ gem 'haml-rails'
 gem 'erb2haml'
 gem 'devise'
 gem 'jquery-ui-rails'
+gem 'rails-i18n'
 
 group :development, :test do
     gem "rspec-rails"

@@ -1,13 +1,19 @@
 %h1 どこからでもアクセス！
 
+= form_tag(test_users_path,{id: 'test_users', data: {remote: true}}) do
+  = submit_tag("submit",name: 'cccc')
+
+#ajax_result
+
 %br
 
-= link_to 'New User', new_user_path
+= link_to 'New User', new_user_path,remote: true
 = render 'form'
-または #{link_to 'ログイン', '',{ :id => "showlogin"}} する
+または #{link_to 'ログイン', '', id: "showlogin"} する
 
 #dialog
   -#  = render "users/shared/links"
+  = render 'loginform'
   %h2 dialoggggggg 
 
 
