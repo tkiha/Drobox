@@ -42,6 +42,7 @@ gem 'erb2haml'
 gem 'devise'
 gem 'jquery-ui-rails'
 gem 'rails-i18n'
+gem 'settingslogic'
 
 group :development, :test do
     gem "rspec-rails"

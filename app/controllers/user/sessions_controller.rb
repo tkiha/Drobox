@@ -1,16 +1,14 @@
 class User::SessionsController < Devise::SessionsController
   def create
-    p 'aaaa'
-    xhr_success
-    # if request.xhr?
-    #   opts = auth_options
-    #   opts[:recall] = "#{controller_path}#xhr_failure"
-    #   self.resource = warden.authenticate!(opts)
-    #   sign_in(resource_name, resource)
-    #   xhr_success
-    # else
-    #   super
-    # end
+    if request.xhr?
+      opts = auth_options
+      opts[:recall] = "#{controller_path}#xhr_failure"
+      self.resource = warden.authenticate!(opts)
+      sign_in(resource_name, resource)
+      xhr_success
+    else
+      super
+    end
   end
 
   def xhr_success
@@ -18,6 +16,7 @@ class User::SessionsController < Devise::SessionsController
   end
 
   def xhr_failure
-    render json: { result: false, errors: ["Login failed."] }
+    p I18n.t('devise.failure.invalid')
+    render json: { error: I18n.t('devise.failure.invalid') },status: Const.xhr.status.error and return
   end
 end

@@ -2,15 +2,14 @@ $ ->
   $("#showlogin").click ->
     $("#dialog").dialog("open")
     return false
-    # alert 'open'
 
   $("#dialog").dialog
     autoOpen: false
     modal: true
-  # alert 'ready'
 
-  $('#test_users').on 'ajax:success', (e, products) ->
-    alert 'success'
+  $('#loginform').on 'ajax:success', (e, products) ->
+    location.reload true
 
-  $('#test_users').on 'ajax:error', (xhr, data, status) ->
-    alert status
+  $('#loginform').on 'ajax:error', (e, xhr, status, error) ->
+    res = xhr.responseJSON
+    alert res.error
