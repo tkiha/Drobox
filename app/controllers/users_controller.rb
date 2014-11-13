@@ -1,12 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def test
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def show
   end
 
@@ -28,7 +22,6 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
-        format.js 
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -62,6 +55,8 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :mail, :password)
+      params.require(:user).permit(:email, :password)
     end
+
+
 end

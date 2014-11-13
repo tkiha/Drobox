@@ -1,20 +1,18 @@
 %h1 どこからでもアクセス！
 
-= if user_signed_in?
+- if user_signed_in?
   = link_to "Sign out", destroy_user_session_path, :method => :delete
-= form_tag(test_users_path,{id: 'test_users', data: {remote: true}}) do
-  = submit_tag("submit",name: 'cccc')
 
-#ajax_result
+- else
+  %br
+  #signup
+    = render 'form'
+  または #{link_to 'ログイン', '', id: "showlogin"} する
 
-%br
+  #dialog
+    #errmsg
 
-= render 'form'
-または #{link_to 'ログイン', '', id: "showlogin"} する
-
-#dialog
-  #notice
-  = render 'loginform'
+    = render 'loginform'
 
 
 

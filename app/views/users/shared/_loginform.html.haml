@@ -1,0 +1,13 @@
+= form_for @user,{url: new_user_session_path, remote: true,html: {id: 'loginform'}}  do |f|
+
+  .field
+    = f.label :メールアドレス
+    = f.text_field :email
+  .field
+    = f.label :パスワード
+    = f.password_field :password, autocomplete: "off"
+
+  = hidden_field_tag :authenticity_token, form_authenticity_token
+
+  .actions
+    = f.submit 'ログイン'

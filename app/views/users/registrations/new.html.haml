@@ -1,21 +1,36 @@
-%h2 Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    - if @validatable
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
-= render "users/shared/links"
+%h1 どこからでもアクセス！
+
+- if user_signed_in?
+  = link_to "Sign out", destroy_user_session_path, :method => :delete
+
+- else
+  %br
+  #signup
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      = devise_error_messages!
+      .field
+        = f.label :メールアドレス
+        %br/
+        = f.email_field :email, autofocus: true
+      .field
+        = f.label :パスワード
+        - if @validatable
+          %em
+            (#{@minimum_password_length} characters minimum)
+        %br/
+        = f.password_field :password, autocomplete: "off"
+      .field
+        = f.label :パスワード（再確認入力）
+        %br/
+        = f.password_field :password_confirmation, autocomplete: "off"
+      .actions
+        = f.submit "登録する"
+    -# = render "users/shared/links"
+  または #{link_to 'ログイン', '', id: "showlogin"} する
+
+  #dialog
+    #errmsg
+
+    = render 'users/shared/loginform'
+
+
