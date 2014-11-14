@@ -16,7 +16,7 @@
         = f.label :パスワード
         - if @validatable
           %em
-            (#{@minimum_password_length} characters minimum)
+            (#{@minimum_password_length} 文字以上)
         %br/
         = f.password_field :password, autocomplete: "off"
       .field
@@ -30,7 +30,8 @@
 
   #dialog
     #errmsg
-
+    %br/
+    %br/
     = render 'users/shared/loginform'
 
 

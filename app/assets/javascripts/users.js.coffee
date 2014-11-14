@@ -11,9 +11,11 @@ $ ->
     title: 'ログイン',
     modal: true
 
+  # ログイン成功
   $('#loginform').on 'ajax:success', (e, products) ->
     location.reload true
 
+  # ログイン失敗
   $('#loginform').on 'ajax:error', (e, xhr, status, error) ->
     res = xhr.responseJSON
     $('#errmsg').text(res.error)
