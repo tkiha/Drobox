@@ -4,6 +4,7 @@ class CreateFolders < ActiveRecord::Migration
       t.string :name
       t.integer :user_id
       t.integer :parent_folder_id
+      t.integer :user_id
 
       t.timestamps
     end

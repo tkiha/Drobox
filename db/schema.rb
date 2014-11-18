@@ -11,22 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107054912) do
+ActiveRecord::Schema.define(version: 20141118090607) do
+
+  create_table "file_share_tos", force: true do |t|
+    t.integer  "file_share_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "file_shares", force: true do |t|
     t.string   "name"
-    t.integer  "from_user_id"
-    t.integer  "to_user_id"
-    t.integer  "file_id"
+    t.integer  "upfile_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "folder_share_tos", force: true do |t|
+    t.integer  "folder_share_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "folder_shares", force: true do |t|
     t.string   "name"
-    t.integer  "from_user_id"
-    t.integer  "to_user_id"
     t.integer  "folder_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -37,6 +49,15 @@ ActiveRecord::Schema.define(version: 20141107054912) do
     t.integer  "parent_folder_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "upfiles", force: true do |t|
+    t.string   "name"
+    t.string   "realname"
+    t.integer  "folder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "users", force: true do |t|

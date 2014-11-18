@@ -1,7 +1,8 @@
 $ ->
   $("#showlogin").click ->
     $("#dialog").dialog("open")
-  #  「登録」押下でエラーが起きた後にログインを開くとエラー色が付いてしまうので透過色にしておく
+  # 登録フォームとログインフォームが混在しているので
+  # 「登録」押下でエラーが起きた後にログインを開くとログインフォームにもエラー色が付いてしまうので透過色にしておく
     $('#loginform .field_with_errors').css('background-color','transparent')
     return false
 

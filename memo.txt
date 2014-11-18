@@ -1,9 +1,11 @@
 rails new Drobox
 rails g scaffold user name:string mail:string password:string
-rails g model folder name:string user_id:integer parent_folder_id:integer
-rails g model file name:string realname:string folder_id:integer
-rails g model folder_share name:string from_user_id:integer to_user_id:integer folder_id:integer
-rails g model file_share name:string from_user_id:integer to_user_id:integer file_id:integer
+rails g model folder name:string user_id:integer parent_folder_id:integer user_id:integer
+rails g model upfile name:string realname:string folder_id:integer
+rails g model folder_share name:string folder_id:integer user_id:integer
+rails g model file_share name:string upfile_id:integer user_id:integer
+rails g model folder_share_to folder_share_id:integer user_id:integer
+rails g model file_share_to file_share_id:integer user_id:integer
 
 rake haml:replace_erbs
 
@@ -12,4 +14,30 @@ git push Drobox master
 
 
 rails generate migration RemoveNameFromUsers name:string
+rails g migration RenameFileIdToFileShare
+rails generate migration AddUseridToUpfile
 
+ActiveRecord::Migration.drop_table(:file_shares)
+ActiveRecord::Migration.drop_table(:folder_shares)
+ActiveRecord::Migration.drop_table(:folder)
+
+class Upfile < ActiveRecord::Base
+  belongs_to :folder
+  belongs_to :own_user, class_name: :User
+  has_many :file_shares, class_name: :FileShare
+
+  # has_many :to_share_users, class_name: :User, foreign_key: :upfile_id, through: :file_shares
+  has_many :to_share_users, class_name: :User, through: :file_shares
+end
+
+
+class FileShare < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :upfile
+end
+
+class FileShare < ActiveRecord::Base
+  belongs_to :from_user, class_name: :User, foreign_key: :from_user_id
+  belongs_to :to_user, class_name: :User, foreign_key: :to_user_id
+  belongs_to :upfile
+end

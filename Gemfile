@@ -45,7 +45,9 @@ gem 'rails-i18n'
 gem 'settingslogic'
 
 group :development, :test do
+    gem 'hirb'
+    gem 'hirb-unicode'
     gem "rspec-rails"
-    gem 'capybara'  
+    gem 'capybara'
     gem 'quiet_assets'
 end
