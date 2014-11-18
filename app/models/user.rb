@@ -5,9 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :validatable, :confirmable
   has_many :upfiles
-  has_many :file_shares
+  has_many :from_shares, class_name: :FileShare, foreign_key: :from_user_id
   # ユーザーが共有しているファイル
-  has_many :share_files, through: :file_shares, source: :upfile
+  has_many :from_share_files, through: :from_shares, source: :upfile
 
   has_many :folders
   has_many :folder_shares

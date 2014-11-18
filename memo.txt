@@ -2,10 +2,8 @@ rails new Drobox
 rails g scaffold user name:string mail:string password:string
 rails g model folder name:string user_id:integer parent_folder_id:integer user_id:integer
 rails g model upfile name:string realname:string folder_id:integer
-rails g model folder_share name:string folder_id:integer user_id:integer
-rails g model file_share name:string upfile_id:integer user_id:integer
-rails g model folder_share_to folder_share_id:integer user_id:integer
-rails g model file_share_to file_share_id:integer user_id:integer
+rails g model folder_share name:string folder_id:integer from_user_id:integer to_user_id:integer
+rails g model file_share name:string upfile_id:integer from_user_id:integer to_user_id:integer
 
 rake haml:replace_erbs
 
@@ -19,7 +17,7 @@ rails generate migration AddUseridToUpfile
 
 ActiveRecord::Migration.drop_table(:file_shares)
 ActiveRecord::Migration.drop_table(:folder_shares)
-ActiveRecord::Migration.drop_table(:folder)
+ActiveRecord::Migration.drop_table(:folders)
 
 class Upfile < ActiveRecord::Base
   belongs_to :folder
