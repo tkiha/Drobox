@@ -6,6 +6,10 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    - if user_signed_in?
+      = link_to "ログアウト", destroy_user_session_path, :method => :delete
+      %hr
+
     %p{class: "notice"}
       = notice
     %p{class: "alert"}

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :from_share_files, through: :from_shares, source: :upfile
 
   has_many :folders
-  has_many :folder_shares
+  has_many :folder_shares, class_name: :FolderShare, foreign_key: :from_user_id
   # ユーザーが共有しているフォルダ
-  has_many :share_folders, through: :folder_shares, source: :folder
+  has_many :ifrom_share_folders, through: :folder_shares, source: :folder
 end
