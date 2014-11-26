@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :validatable, :confirmable
+  after_save :generate_root_folder
+  
   has_many :upfiles
   has_many :from_shares, class_name: :FileShare, foreign_key: :from_user_id
   # ユーザーが共有しているファイル
@@ -13,4 +15,9 @@ class User < ActiveRecord::Base
   has_many :folder_shares, class_name: :FolderShare, foreign_key: :from_user_id
   # ユーザーが共有しているフォルダ
   has_many :ifrom_share_folders, through: :folder_shares, source: :folder
+
+  private
+  def generate_root_folder
+    self.folders.build(name: 'root').save unless self.folders.root_folder.present?
+  end
 end

@@ -1,0 +1,9 @@
+%h1 ファイルアップロード
+
+アップロード先フォルダ： #{@folder.name}
+
+%hr
+
+= render 'form'
+
+= link_to 'Back', list_folder_path(@folder)

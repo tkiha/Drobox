@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, 
+  devise_for :users,
     controllers: {sessions: 'user/sessions', }
-  #todo :authenticate_user!フィルタに引っかかった場合のルーティング
-  #,skip: [:sessions]
+  #todo :authenticate_user!フィルタに#引っかかった場合のルーティング
+  #skip: [:sessions]
 
   devise_scope :user do
     authenticated :user do
@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     # get "/users/sign_in" => "devise/registrations#new", as: :new_user_session
   end
 
-  resources :folders
-
+  match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
+  resources :folders do
+    resources :upfiles
+  end
 end

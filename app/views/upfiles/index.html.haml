@@ -1,4 +1,4 @@
-%h1 ファイル
+%h1 Drobox
 
 %hr
 
@@ -8,12 +8,12 @@
     %th 種類
     %th 更新
 
-  - @folder.sub_folders.each do |folder|
+  - upload_folder(@upfiles.first).sub_folders.each do |folder|
     %tr
-      %td= link_to folder.name, list_folder_path(folder)
+      %td= link_to folder.name, folder_upfiles_path(folder)
       %td= file_type_name(folder)
 
-  - @folder.upfiles.each_with_index do |upfile|
+  - @upfiles.each_with_index do |upfile, index|
     %tr
       %td= link_to upfile.name, ''
 
@@ -23,5 +23,4 @@
 
 %br
 
-= link_to 'アップロード', new_folder_upfile_path(@folder)
-
+= link_to 'アップロード', new_folder_upfile_path(upload_folder(@upfiles.first))

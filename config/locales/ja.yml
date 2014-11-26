@@ -7,8 +7,11 @@ ja:
         password: "パスワード"
         password_confirmation: "確認パスワード" 
         remember_me: 
+      upfile:
+        name: "ファイル名"
     models:
       user: "アカウント"
+      upfile: "ファイル"
   devise:
     confirmations:
       new:

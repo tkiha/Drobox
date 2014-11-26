@@ -7,5 +7,9 @@ class Folder < ActiveRecord::Base
   has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id
   belongs_to :parent_folder, class_name: :Folder, foreign_key: :parent_folder_id
 
+  scope :root_folder, -> { find_by(parent_folder_id: nil) }
+  scope :get_folder_or_root, ->(folder_id){
+    folder_id.blank? ? root_folder : find(folder_id)
+  }
 
 end

@@ -1,7 +1,7 @@
 rails new Drobox
 rails g scaffold user name:string mail:string password:string
 rails g model folder name:string user_id:integer parent_folder_id:integer user_id:integer
-rails g model upfile name:string realname:string folder_id:integer
+rails g model upfile name:string file_binary:binary folder_id:integer user_id:integer
 rails g model folder_share name:string folder_id:integer from_user_id:integer to_user_id:integer
 rails g model file_share name:string upfile_id:integer from_user_id:integer to_user_id:integer
 
@@ -15,10 +15,24 @@ rails generate migration RemoveNameFromUsers name:string
 rails g migration RenameFileIdToFileShare
 rails generate migration AddUseridToUpfile
 
+rails destroy model upfile
+
 ActiveRecord::Migration.drop_table(:file_shares)
 ActiveRecord::Migration.drop_table(:folder_shares)
 ActiveRecord::Migration.drop_table(:folders)
+ActiveRecord::Migration.drop_table(:upfiles)
 
 
 rails g scaffold_controller folder
+rails destroy scaffold_controller folder
+rails g scaffold_controller upfile
 
+
+
+class Upfile < ActiveRecord::Base
+  belongs_to :folder
+  belongs_to :own_user, class_name: :User
+  has_many :file_shares
+  has_many :from_share_users, through: :file_shares, source: :from_user
+
+end
