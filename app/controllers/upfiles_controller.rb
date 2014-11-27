@@ -70,7 +70,6 @@ class UpfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def upfile_params
-      # params.require(:upfile).permit(:upload_file)
-      params[:upfile]
+      params.fetch(:upfile,{}).permit(:upload_file)
     end
 end

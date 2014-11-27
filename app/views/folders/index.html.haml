@@ -1,10 +1,10 @@
-%h1 ファイル  #{folder_parents_html(@folder)}
+%h1 フォルダ  #{folder_parents_html(@folder)}
 
 %hr
 
 %table
   %tr
-    %th フォルダ
+    %th ファイル
     %th 種類
 
   - @folder.sub_folders.each do |folder|
@@ -21,7 +21,8 @@
 -#       %td= link_to 'Edit', edit_upfile_path(upfile)
 -#       %td= link_to 'Destroy', upfile, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
+%hr
 
+= link_to 'フォルダ作成', new_folder_path(@folder)
 = link_to 'アップロード', new_folder_upfile_path(@folder)
 
