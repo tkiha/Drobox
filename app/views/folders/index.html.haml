@@ -1,12 +1,11 @@
-%h1 ファイル
+%h1 ファイル  #{folder_parents_html(@folder)}
 
 %hr
 
 %table
   %tr
-    %th ファイル名
+    %th フォルダ
     %th 種類
-    %th 更新
 
   - @folder.sub_folders.each do |folder|
     %tr
@@ -16,6 +15,7 @@
   - @folder.upfiles.each_with_index do |upfile|
     %tr
       %td= link_to upfile.name, ''
+      %td= file_type_name(upfile)
 
 
 -#       %td= link_to 'Edit', edit_upfile_path(upfile)
