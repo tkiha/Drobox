@@ -9,9 +9,13 @@ ja:
         remember_me: 
       upfile:
         name: "ファイル名"
+      folder:
+        name: "フォルダ名"
+        user_id: "所有アカウント"
     models:
       user: "アカウント"
       upfile: "ファイル"
+      folder: "フォルダ"
   devise:
     confirmations:
       new:

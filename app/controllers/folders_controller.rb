@@ -1,44 +1,37 @@
 class FoldersController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_folder, only: [:index, :show, :edit, :update, :destroy]
+  before_action :set_user, only: [:index, :create, :new, :show, :edit, :update, :destroy]
+  before_action :set_parent_folder, only: [:new, :create, :show, :edit, :update, :destroy]
+  before_action :set_folder, only: [:show, :edit, :update, :destroy]
 
-  # GET /folders
-  # GET /folders.json
   def index
+    @folder = @user.folders.get_folder_or_root(params[:id])
   end
 
-  # GET /folders/1
-  # GET /folders/1.json
   def show
   end
 
-  # GET /folders/new
   def new
-    @folder = Folder.new
+    @folder = @parent_folder.sub_folders.build
   end
 
-  # GET /folders/1/edit
   def edit
   end
 
-  # POST /folders
-  # POST /folders.json
   def create
-    @folder = Folder.new(folder_params)
+    rec_values = folder_params
+    rec_values[:user_id] = @user.id
+    @folder = @parent_folder.sub_folders.build(rec_values)
 
     respond_to do |format|
       if @folder.save
-        format.html { redirect_to @folder, notice: 'Folder was successfully created.' }
-        format.json { render :show, status: :created, location: @folder }
+        format.html { redirect_to list_folder_path(@parent_folder), notice: 'フォルダを作成しました' }
       else
         format.html { render :new }
-        format.json { render json: @folder.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /folders/1
-  # PATCH/PUT /folders/1.json
   def update
     respond_to do |format|
       if @folder.update(folder_params)
@@ -51,8 +44,6 @@ class FoldersController < ApplicationController
     end
   end
 
-  # DELETE /folders/1
-  # DELETE /folders/1.json
   def destroy
     @folder.destroy
     respond_to do |format|
@@ -62,13 +53,18 @@ class FoldersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(current_user)
+    end
+    def set_parent_folder
+      @parent_folder = @user.folders.find(params[:folder_id])
+    end
     def set_folder
-      @folder = User.find(current_user).folders.get_folder_or_root(params[:id])
+      @folder = @parent_folder.sub_folders.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def folder_params
-      params[:folder]
+      params.require(:folder).permit(:name)
     end
 end

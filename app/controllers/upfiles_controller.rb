@@ -68,7 +68,6 @@ class UpfilesController < ApplicationController
       p "---> #{@folder.inspect}"
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def upfile_params
       params.fetch(:upfile,{}).permit(:upload_file)
     end

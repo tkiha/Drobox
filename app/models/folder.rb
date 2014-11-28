@@ -12,4 +12,7 @@ class Folder < ActiveRecord::Base
     folder_id.blank? ? root_folder : find(folder_id)
   }
 
+  validates :name, presence: true,
+    length: {maximum: 100}
+  validates :user_id, presence: true
 end
