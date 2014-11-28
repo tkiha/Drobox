@@ -1,4 +1,5 @@
 class Folder < ActiveRecord::Base
+  before_destroy :include_check
   has_many :upfiles
   belongs_to :own_user, class_name: :User
   has_many :folder_shares
@@ -15,4 +16,16 @@ class Folder < ActiveRecord::Base
   validates :name, presence: true,
     length: {maximum: 100}
   validates :user_id, presence: true
+
+  private
+  def include_check
+    if self.sub_folders.present?
+      errors[:custom_check] << "サブフォルダがあるので削除できません"
+      return false
+    end
+    if self.upfiles.present?
+      errors[:custom_check] << "フォルダの中にファイルがあるので削除できません"
+      return false
+    end
+  end
 end

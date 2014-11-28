@@ -18,6 +18,6 @@ Rails.application.routes.draw do
   match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
   resources :folders, only: [:index] do
     resources :upfiles
-    resources :folders
+    resources :folders, only: [:index, :create, :new, :destroy]
   end
 end

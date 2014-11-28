@@ -31,6 +31,7 @@ class UpfilesController < ApplicationController
       if @upfile.save
         format.html { redirect_to list_folder_path(@folder), notice: 'ファイルをアップロードしました' }
       else
+        p "--->#{@upfile.errors.messages}"
         format.html { render :new }
       end
     end

@@ -45,10 +45,14 @@ class FoldersController < ApplicationController
   end
 
   def destroy
-    @folder.destroy
     respond_to do |format|
-      format.html { redirect_to folders_url, notice: 'Folder was successfully destroyed.' }
-      format.json { head :no_content }
+      if @folder.destroy
+        format.html { redirect_to folders_url, notice: 'フォルダを削除しました' }
+      else
+        p @folder.errors.messages[:custom_check]
+        format.html { redirect_to folders_url, notice: @folder.errors.messages[:custom_check].join }
+
+      end
     end
   end
 

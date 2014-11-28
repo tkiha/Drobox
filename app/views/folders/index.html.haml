@@ -2,20 +2,29 @@
 
 %hr
 
+- if @folder.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@folder.errors.count, "error")} prohibited this upfile from being saved:"
+    %ul
+      - @folder.errors.full_messages.each do |msg|
+        %li= msg
 %table
   %tr
     %th ファイル
     %th 種類
+    %th
 
   - @folder.sub_folders.each do |folder|
     %tr
       %td= link_to folder.name, list_folder_path(folder)
       %td= file_type_name(folder)
+      %td= link_to '削除', [@folder, folder], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
   - @folder.upfiles.each_with_index do |upfile|
     %tr
       %td= link_to upfile.name, ''
       %td= file_type_name(upfile)
+      %td= link_to '削除', [@folder, upfile], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
 
 -#       %td= link_to 'Edit', edit_upfile_path(upfile)
