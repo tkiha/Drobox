@@ -10,20 +10,30 @@
         %li= msg
 %table
   %tr
-    %th ファイル
-    %th 種類
+    %th= filelist_header_tag(Const.orderby.field.file, @folder, @orderby)
+    %th= filelist_header_tag(Const.orderby.field.type, @folder, @orderby)
+    %th= filelist_header_tag(Const.orderby.field.time, @folder, @orderby)
     %th
+
+  - list_folder = @folder.list_folder_source(@orderby)
+  - list_folder.each do |f|
+    %tr
+      %td= link_to f[Const.orderby.field.file], list_folder_path(f[:object])
+      %td= get_disp_type_name(f[:object])
+      %td= get_disp_update_time(f[:object])
 
   - @folder.sub_folders.each do |folder|
     %tr
       %td= link_to folder.name, list_folder_path(folder)
-      %td= file_type_name(folder)
+      %td= get_disp_type_name(folder)
+      %td= get_disp_update_time(folder)
       %td= link_to '削除', [@folder, folder], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
-  - @folder.upfiles.each_with_index do |upfile|
+  - @folder.upfiles.each do |upfile|
     %tr
       %td= link_to upfile.name, ''
-      %td= file_type_name(upfile)
+      %td= get_disp_type_name(upfile)
+      %td= get_disp_update_time(upfile)
       %td= link_to '削除', [@folder, upfile], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
 
@@ -32,6 +42,6 @@
 
 %hr
 
-= link_to 'フォルダ作成', new_folder_folder_path(@folder)
 = link_to 'アップロード', new_folder_upfile_path(@folder)
+= link_to 'フォルダ作成', new_folder_folder_path(@folder)
 

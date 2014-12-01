@@ -6,6 +6,7 @@ class FoldersController < ApplicationController
 
   def index
     @folder = @user.folders.get_folder_or_root(params[:id])
+    set_orderby
   end
 
   def show
@@ -66,6 +67,18 @@ class FoldersController < ApplicationController
     def set_folder
       @folder = @parent_folder.sub_folders.find(params[:id])
     end
+
+    def set_orderby
+      session[self.class.name] = {
+        Const.orderby.field.file => Const.orderby.none,
+        Const.orderby.field.type => Const.orderby.none,
+        Const.orderby.field.time => Const.orderby.none,
+      }
+      session[self.class.name][params[:f]] = params[:o] if params[:f].present? && params[:o].present?
+      @orderby = session[self.class.name]
+      p @orderby
+    end
+  
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def folder_params
