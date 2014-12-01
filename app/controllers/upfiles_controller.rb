@@ -52,8 +52,7 @@ class UpfilesController < ApplicationController
   def destroy
     @upfile.destroy
     respond_to do |format|
-      format.html { redirect_to upfiles_url, notice: 'Upfile was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to list_folder_path(@folder), notice: 'ファイルを削除しました' }
     end
   end
 
