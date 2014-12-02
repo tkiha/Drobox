@@ -18,24 +18,10 @@
   - list_folder = @folder.list_folder_source(@orderby)
   - list_folder.each do |f|
     %tr
-      %td= link_to f[Const.orderby.field.file], list_folder_path(f[:object])
+      %td= file_link_tag(f[:object])
       %td= get_disp_type_name(f[:object])
       %td= get_disp_update_time(f[:object])
-
-  - @folder.sub_folders.each do |folder|
-    %tr
-      %td= link_to folder.name, list_folder_path(folder)
-      %td= get_disp_type_name(folder)
-      %td= get_disp_update_time(folder)
-      %td= link_to '削除', [@folder, folder], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
-
-  - @folder.upfiles.each do |upfile|
-    %tr
-      %td= link_to upfile.name, ''
-      %td= get_disp_type_name(upfile)
-      %td= get_disp_update_time(upfile)
-      %td= link_to '削除', [@folder, upfile], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
-
+      %td= link_to '削除', [ @folder, f[:object] ], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
 -#       %td= link_to 'Edit', edit_upfile_path(upfile)
 -#       %td= link_to 'Destroy', upfile, :method => :delete, :data => { :confirm => 'Are you sure?' }

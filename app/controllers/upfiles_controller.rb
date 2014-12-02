@@ -1,6 +1,8 @@
 class UpfilesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_user, :set_folder, :set_upfile, only: [:new, :create, :show, :edit, :update, :destroy]
+  before_action :set_user, :set_folder, only: [:new, :create, :show, :edit, :update, :destroy]
+  before_action :set_upfiles, only: [:new, :create, :show, :edit, :update]
+  before_action :set_upfile, only: [:destroy]
 
   def index
   end
@@ -9,7 +11,7 @@ class UpfilesController < ApplicationController
   end
 
   def new
-    @upfile = @upfile.build
+    @upfile = @upfiles.build
   end
 
   def edit
@@ -25,7 +27,7 @@ class UpfilesController < ApplicationController
     rec_values[:user_id] = @user.id
 
 
-    @upfile = @upfile.build(rec_values)
+    @upfile = @upfiles.build(rec_values)
 
     respond_to do |format|
       if @upfile.save
@@ -51,6 +53,7 @@ class UpfilesController < ApplicationController
 
   def destroy
     @upfile.destroy
+    p "---> #{@upfile.inspect}"
     respond_to do |format|
       format.html { redirect_to list_folder_path(@folder), notice: 'ファイルを削除しました' }
     end
@@ -63,9 +66,13 @@ class UpfilesController < ApplicationController
     def set_folder
       @folder = @user.folders.find(params[:folder_id])
     end
-    def set_upfile
-      @upfile = @folder.upfiles
+     def set_upfiles
+      @upfiles = @folder.upfiles
       p "---> #{@folder.inspect}"
+    end
+
+   def set_upfile
+      @upfile = @folder.upfiles.find(params[:id])
     end
 
     def upfile_params
