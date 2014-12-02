@@ -1,8 +1,8 @@
 class UpfilesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_user, :set_folder, only: [:new, :create, :show, :edit, :update, :destroy]
-  before_action :set_upfiles, only: [:new, :create, :show, :edit, :update]
-  before_action :set_upfile, only: [:destroy]
+  before_action :set_user, :set_folder, only: [:new, :create, :show, :edit, :update, :destroy, :download]
+  before_action :set_upfiles, only: [:new, :create, :edit, :update]
+  before_action :set_upfile, only: [:destroy, :show, :download]
 
   def index
   end
@@ -15,6 +15,11 @@ class UpfilesController < ApplicationController
   end
 
   def edit
+  end
+
+  def download
+    #p "--->#{@upfile.name}"
+    send_data(@upfile.file_binary, filename: @upfile.name)
   end
 
   def create

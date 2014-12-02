@@ -17,7 +17,11 @@ Rails.application.routes.draw do
 
   match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
   resources :folders, only: [:index] do
-    resources :upfiles
+    resources :upfiles do
+      member do
+        get :download
+      end
+    end
     resources :folders, only: [:index, :create, :new, :destroy]
   end
 end

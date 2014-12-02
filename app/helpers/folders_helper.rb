@@ -1,14 +1,14 @@
 module FoldersHelper
-  def file_link_tag(target_object)
+  def file_link_tag(folder, target_object)
     if target_object.kind_of?(Folder)
       return link_to target_object.name, list_folder_path(target_object)
     end
 
     if target_object.kind_of?(Upfile)
-      # todo リンク先決まったら直す
-      return link_to target_object.name, '' 
+      return link_to target_object.name, folder_upfile_path(folder, target_object)
     end
   end
+
   def filelist_header_tag(field, folder, orderby)
     case field
       when Const.orderby.field.file

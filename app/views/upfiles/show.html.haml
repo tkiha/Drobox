@@ -1,6 +1,17 @@
 %p#notice= notice
 
+%p
+  %strong ファイル名:
+  = @upfile.name
+%p
+  %strong サイズ:
+  = "#{@upfile.file_binary.length}バイト"
+%p
+  %strong 更新日時:
+  = get_disp_update_time(@upfile)
 
-= link_to 'Edit', edit_upfile_path(@upfile)
+= link_to 'ダウンロード', download_folder_upfile_path(@folder, @upfile)
 \|
-= link_to 'Back', upfiles_path
+= link_to '編集', edit_folder_upfile_path(@folder, @upfile)
+\|
+= link_to '戻る', list_folder_path(@folder)
