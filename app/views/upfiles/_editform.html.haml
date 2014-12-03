@@ -1,0 +1,12 @@
+= form_for ([@folder, @upfile]) do |f|
+  - if @upfile.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@upfile.errors.count, "error")} prohibited this upfile from being saved:"
+      %ul
+        - @upfile.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.text_field :name
+
+  .actions
+    = f.submit '保存'

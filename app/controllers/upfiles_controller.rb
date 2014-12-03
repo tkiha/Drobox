@@ -1,8 +1,8 @@
 class UpfilesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_user, :set_folder, only: [:new, :create, :show, :edit, :update, :destroy, :download]
-  before_action :set_upfiles, only: [:new, :create, :edit, :update]
-  before_action :set_upfile, only: [:destroy, :show, :download]
+  before_action :set_upfiles, only: [:new, :create]
+  before_action :set_upfile, only: [:destroy, :show, :download, :edit, :update]
 
   def index
   end
@@ -46,12 +46,10 @@ class UpfilesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @upfile.update(upfile_params)
-        format.html { redirect_to @upfile, notice: 'Upfile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @upfile }
+      if @upfile.update(upfile_edit_params)
+        format.html { redirect_to folder_upfile_path(@folder, @upfile), notice: '更新しました' }
       else
         format.html { render :edit }
-        format.json { render json: @upfile.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -82,5 +80,9 @@ class UpfilesController < ApplicationController
 
     def upfile_params
       params.fetch(:upfile,{}).permit(:upload_file)
+    end
+    
+    def upfile_edit_params
+      params.require(:upfile).permit(:name)
     end
 end

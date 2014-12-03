@@ -1,5 +1,3 @@
-%p#notice= notice
-
 %p
   %strong ファイル名:
   = @upfile.name
@@ -10,8 +8,10 @@
   %strong 更新日時:
   = get_disp_update_time(@upfile)
 
+%hr
+
 = link_to 'ダウンロード', download_folder_upfile_path(@folder, @upfile)
 \|
 = link_to '編集', edit_folder_upfile_path(@folder, @upfile)
 \|
-= link_to '戻る', list_folder_path(@folder)
+= link_to '一覧へ', list_folder_path(@folder)

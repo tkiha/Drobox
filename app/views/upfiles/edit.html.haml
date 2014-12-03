@@ -1,7 +1,8 @@
-%h1 Editing upfile
+%h1 ファイル名変更
 
-= render 'form'
+= render 'editform'
 
-= link_to 'Show', @upfile
+%hr
+= link_to '参照', folder_upfile_path(@folder, @upfile)
 \|
-= link_to 'Back', upfiles_path
+= link_to '一覧へ', list_folder_path(@folder, @upfile)
