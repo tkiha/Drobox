@@ -36,7 +36,9 @@ class FoldersController < ApplicationController
   def update
     respond_to do |format|
       if @folder.update(folder_params)
-        format.html { redirect_to list_folder_path(@folder), notice: 'フォルダ名を変更しました' }
+        # format.html { redirect_to list_folder_path(@folder), notice: 'フォルダ名を変更しました' }
+        flash.now[:notice] = 'フォルダ名を変更しました'
+        format.html { render :edit }
       else
         format.html { render :edit }
       end
