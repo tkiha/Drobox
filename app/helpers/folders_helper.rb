@@ -9,6 +9,16 @@ module FoldersHelper
     end
   end
 
+  def file_edit_tag(folder, target_object)
+    if target_object.kind_of?(Folder)
+      return link_to '編集', edit_folder_folder_path(folder, target_object)
+    end
+
+    if target_object.kind_of?(Upfile)
+      return link_to '編集', edit_folder_upfile_path(folder, target_object)
+    end
+  end
+
   def filelist_header_tag(field, folder, orderby)
     case field
       when Const.orderby.field.file

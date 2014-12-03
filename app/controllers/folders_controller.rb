@@ -5,8 +5,8 @@ class FoldersController < ApplicationController
   before_action :set_folder, only: [:show, :edit, :update, :destroy]
 
   def index
-    @folder = @user.folders.get_folder_or_root(params[:id])
     set_orderby
+    @folder = @user.folders.get_folder_or_root(params[:id])
   end
 
   def show
@@ -36,11 +36,9 @@ class FoldersController < ApplicationController
   def update
     respond_to do |format|
       if @folder.update(folder_params)
-        format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
-        format.json { render :show, status: :ok, location: @folder }
+        format.html { redirect_to list_folder_path(@folder), notice: 'フォルダ名を変更しました' }
       else
         format.html { render :edit }
-        format.json { render json: @folder.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,7 +74,7 @@ class FoldersController < ApplicationController
       }
       session[self.class.name][params[:f]] = params[:o] if params[:f].present? && params[:o].present?
       @orderby = session[self.class.name]
-      p @orderby
+      # p @orderby
     end
   
 

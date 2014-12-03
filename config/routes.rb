@@ -22,6 +22,6 @@ Rails.application.routes.draw do
         get :download
       end
     end
-    resources :folders, only: [:index, :create, :new, :destroy]
+    resources :folders, only: [:edit, :create, :new, :destroy, :update]
   end
 end
