@@ -6,6 +6,8 @@ class FoldersController < ApplicationController
 
 
   def search
+   # render json: { result: @folder.get_family_folders }
+   @search_result =  @folder.get_family_folders 
   end
 
 

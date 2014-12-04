@@ -14,6 +14,11 @@
 \|
 = link_to '編集', edit_folder_upfile_path(@folder, @upfile)
 \|
-= link_to '移動する', search_folder_path(@folder, {f: 'file'})
+= link_to '移動', '', id: "showtree"
 \|
 = link_to '一覧へ', list_folder_path(@folder)
+
+
+
+#treedialog
+  = render 'folders/treeform'

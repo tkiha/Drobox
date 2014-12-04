@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :upfiles do
       member do
         get :download
+        patch :move
       end
     end
     resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show]

@@ -4,11 +4,9 @@ class SubfoldersController < ApplicationController
   before_action :set_parent_folder
   before_action :set_folder, only: [:show, :edit, :update, :destroy]
 
-
   def new
     @folder = @parent_folder.sub_folders.build
   end
-
 
   def create
     rec_values = folder_params
@@ -27,9 +25,7 @@ class SubfoldersController < ApplicationController
   def update
     respond_to do |format|
       if @folder.update(folder_params)
-        # format.html { redirect_to list_folder_path(@folder), notice: 'フォルダ名を変更しました' }
-        flash.now[:notice] = 'フォルダ名を変更しました'
-        format.html { render :edit }
+        format.html { redirect_to folder_folder_path(@parent_folder, @folder), notice: 'フォルダ名を変更しました' }
       else
         format.html { render :edit }
       end

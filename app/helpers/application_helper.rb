@@ -9,9 +9,38 @@ module ApplicationHelper
     target_object.updated_at.to_s(:db)
   end
 
+  def family_folders_html(families)
+    content_tag(:folder_tree) do
+      unless families[:parent].blank?
+        concat link_to(families[:parent][:name], 
+                       search_folder_path(families[:parent][:id]),
+                       {class: 'search_folder',remote: true}
+                      )
+        concat tag(:br)
+        concat '|-'
+      end
+      concat link_to(families[:self][:name],
+                     search_folder_path(families[:self][:id]),
+                     {class: 'search_folder',remote: true}
+                    )
+      unless families[:child].blank?
+        families[:child].each do |sub_folder|
+          concat tag(:br)
+          concat raw('&nbsp')
+          concat '|-'
+          concat link_to(sub_folder[:name],
+                         search_folder_path(sub_folder[:id]),
+                         {class: 'search_folder',remote: true}
+                        )
+        end
+      end
+
+    end
+  end
+
   def folder_parents_html(folder)
     parents ||= []
-    folder_parents(folder,parents)
+    folder.all_parents(parents)
     content_tag(:folders) do
       parents.each_with_index.reverse_each do |f,index|
         concat link_to(f.name,list_folder_path(f))
@@ -31,15 +60,6 @@ module ApplicationHelper
     end
 
     return orderby_item,orderby_value.to_i
-  end
-
-  private
-  # 受け取ったフォルダの親を辿ってparents配列にセットする
-  def folder_parents(folder,parents)
-    parents << folder
-    parent = folder.parent_folder
-    folder_parents(parent,parents) if parent.present?
-
   end
 
 end

@@ -21,6 +21,29 @@ class Folder < ActiveRecord::Base
     self.updated_at
   end
 
+
+  def get_family_folders
+    families = {}
+    families[:parent] = { id: self.parent_folder.id, name:self.parent_folder.name } unless self.parent_folder_id.blank?
+    families[:self]   = { id: self.id, name: self.name }
+    if self.sub_folders.present?
+      childs = []
+      self.sub_folders.each do |sub_folder|
+        childs << { id: sub_folder.id, name: sub_folder.name }
+      end
+      families[:child] = childs
+    end
+    families
+  end
+
+  # 親を辿ってparents配列にセットする
+  def all_parents(parents)
+    parents << self
+    parent = self.parent_folder
+    parent.all_parents(parents) if parent.present?
+
+  end
+
   # folders/index.htmlに表示するデータを抽出し、並び順を適用する
   def list_folder_source(orderby)
     list = []
@@ -55,7 +78,6 @@ class Folder < ActiveRecord::Base
       list.reverse! if orderby_value == Const.orderby.desc
       # p '+++'
     end
-
 
     list
   end
