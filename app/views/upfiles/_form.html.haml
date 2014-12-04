@@ -6,7 +6,7 @@
         - @upfile.errors.full_messages.each do |msg|
           %li= msg
 
-  = f.file_field :upload_file
+  = f.text_field :name
 
   .actions
-    = f.submit 'アップロード'
+    = f.submit '保存'

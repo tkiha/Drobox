@@ -15,6 +15,7 @@
     %th= filelist_header_tag(Const.orderby.field.time, @folder, @orderby)
     %th
     %th
+    %th
 
   - list_folder = @folder.list_folder_source(@orderby)
   - list_folder.each do |f|
@@ -22,11 +23,9 @@
       %td= file_link_tag(@folder, f[:object])
       %td= get_disp_type_name(f[:object])
       %td= get_disp_update_time(f[:object])
+      %td= file_view_tag(@folder, f[:object])
       %td= file_edit_tag(@folder, f[:object])
       %td= link_to '削除', [@folder, f[:object]], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
-
--#       %td= link_to 'Edit', edit_upfile_path(upfile)
--#       %td= link_to 'Destroy', upfile, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %hr
 

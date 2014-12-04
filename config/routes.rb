@@ -16,12 +16,13 @@ Rails.application.routes.draw do
   end
 
   match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
+  match 'search(/:id)' => 'folders#search', :as => 'search_folder', :defaults => {id: nil}, :via => :get
   resources :folders, only: [:index] do
     resources :upfiles do
       member do
         get :download
       end
     end
-    resources :folders, only: [:edit, :create, :new, :destroy, :update]
+    resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show]
   end
 end

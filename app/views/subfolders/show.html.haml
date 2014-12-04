@@ -1,0 +1,13 @@
+%p
+  %strong フォルダ名:
+  = @folder.name
+%p
+  %strong 更新日時:
+  = get_disp_update_time(@folder)
+
+%hr
+
+
+= link_to '編集', edit_folder_folder_path(@folder.parent_folder, @folder)
+\|
+= link_to '一覧へ', list_folder_path(@folder)
