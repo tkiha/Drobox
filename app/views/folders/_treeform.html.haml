@@ -1,10 +1,10 @@
-= form_for @upfile,{url: move_folder_upfile_path(@folder, @upfile)}  do |f|
-  = f.label :現在のフォルダ
-  = link_to @folder.name, search_folder_path(@folder), {id: 'current_folder',class: 'search_folder',remote: true}
-  %br
+= form_for ([@folder, @upfile]),{url: move_folder_upfile_path(@folder, @upfile)}  do |f|
+  #current
+    = f.label :現在のフォルダ：
+    = link_to @folder.name, search_folder_path(@folder), {id: 'current_folder',class: 'search_folder',remote: true}
 
-  = f.label :移動先フォルダ
-  = link_to @folder.name, search_folder_path(@folder), {id: 'current_folder',class: 'search_folder',remote: true}
+  #moveto_folder
+
   %hr
 
   #tree

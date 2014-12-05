@@ -38,6 +38,22 @@ module ApplicationHelper
     end
   end
 
+
+  def family_folders_selected_html(families)
+    content_tag(:folder_selected) do
+
+      concat label_tag(:移動先フォルダ：)
+      concat ' '
+      concat link_to(families[:self][:name],
+                     search_folder_path(families[:self][:id]),
+                     {class: 'search_folder',remote: true}
+                    )
+
+      concat hidden_field_tag(:moveto_folder_id, families[:self][:id])
+    end
+
+  end
+
   def folder_parents_html(folder)
     parents ||= []
     folder.all_parents(parents)

@@ -1,8 +1,8 @@
 class UpfilesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_user, :set_folder, only: [:new, :create, :show, :edit, :update, :destroy, :download]
+  before_action :set_user, :set_folder
   before_action :set_upfiles, only: [:new, :create]
-  before_action :set_upfile, only: [:destroy, :show, :download, :edit, :update]
+  before_action :set_upfile, only: [:move, :destroy, :show, :download, :edit, :update]
 
   def index
   end
@@ -15,6 +15,18 @@ class UpfilesController < ApplicationController
   end
 
   def edit
+  end
+
+  def move
+    moveto_folder_id = upfile_move_params
+    respond_to do |format|
+      if @upfile.update({folder_id: moveto_folder_id})
+        format.html { redirect_to list_folder_path(moveto_folder_id), notice: '移動しました' }
+      else
+        format.html { render :edit }
+      end
+    end
+
   end
 
   def download
@@ -81,8 +93,12 @@ class UpfilesController < ApplicationController
     def upfile_params
       params.fetch(:upfile,{}).permit(:upload_file)
     end
-    
+
     def upfile_edit_params
       params.require(:upfile).permit(:name)
+    end
+
+    def upfile_move_params
+      params.require(:moveto_folder_id)
     end
 end

@@ -2,3 +2,6 @@
     $('#tree').html(
       "<%= escape_javascript(render 'search_result') %>"
     )
+    $('#moveto_folder').html(
+      "<%= escape_javascript(render 'search_result_selected') %>"
+    )
