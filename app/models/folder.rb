@@ -13,6 +13,7 @@ class Folder < ActiveRecord::Base
     folder_id.blank? ? root_folder : find(folder_id)
   }
 
+  validate :my_parent_folder
   validates :name, presence: true,
     length: {maximum: 100}
   validates :user_id, presence: true
@@ -83,16 +84,21 @@ class Folder < ActiveRecord::Base
   end
 
   private
-  def include_check
-    if self.sub_folders.present?
-      errors[:custom_check] << "サブフォルダがあるので削除できません"
-      return false
+    def include_check
+      if self.sub_folders.present?
+        errors[:custom_check] << "サブフォルダがあるので削除できません"
+        return false
+      end
+      if self.upfiles.present?
+        errors[:custom_check] << "フォルダの中にファイルがあるので削除できません"
+        return false
+      end
     end
-    if self.upfiles.present?
-      errors[:custom_check] << "フォルダの中にファイルがあるので削除できません"
-      return false
-    end
-  end
 
+    def my_parent_folder
+      return if self.parent_folder_id.blank?
+
+      errors.add(:parent_folder_id, '不正な親フォルダです') unless User.find(self.user_id).folders.pluck(:id).include?(self.parent_folder_id)
+    end
 
 end

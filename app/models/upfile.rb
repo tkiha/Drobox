@@ -14,8 +14,6 @@ class Upfile < ActiveRecord::Base
   private
 
     def my_folder
-      p "==>#{self.folder_id.inspect}"
-      p "==>#{User.find(self.user_id).folders.pluck.inspect}"
       errors.add(:folder_id, '不正なフォルダです') unless User.find(self.user_id).folders.pluck(:id).include?(self.folder_id)
     end
 end

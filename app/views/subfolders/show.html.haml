@@ -10,4 +10,10 @@
 
 = link_to '編集', edit_folder_folder_path(@folder.parent_folder, @folder)
 \|
+= link_to '移動', '', id: "showtree"
+\|
 = link_to '一覧へ', list_folder_path(@folder)
+
+
+#treedialog
+  = render 'moveform'

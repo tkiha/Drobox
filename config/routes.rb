@@ -24,6 +24,10 @@ Rails.application.routes.draw do
         patch :move
       end
     end
-    resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show]
+    resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show] do
+      member do
+        patch :move
+      end
+    end
   end
 end

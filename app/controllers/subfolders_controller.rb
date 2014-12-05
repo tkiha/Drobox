@@ -2,7 +2,7 @@ class SubfoldersController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_user
   before_action :set_parent_folder
-  before_action :set_folder, only: [:show, :edit, :update, :destroy]
+  before_action :set_folder, only: [:show, :edit, :update, :destroy, :move]
 
   def new
     @folder = @parent_folder.sub_folders.build
@@ -18,6 +18,17 @@ class SubfoldersController < ApplicationController
         format.html { redirect_to list_folder_path(@parent_folder), notice: 'フォルダを作成しました' }
       else
         format.html { render :new }
+      end
+    end
+  end
+
+  def move
+    moveto_folder_id = folder_move_params
+    respond_to do |format|
+      if @folder.update({parent_folder_id: moveto_folder_id})
+        format.html { redirect_to list_folder_path(moveto_folder_id), notice: '移動しました' }
+      else
+        format.html { redirect_to list_folder_path(@parent_folder.id) , notice: @folder.errors.messages[:parent_folder_id].join }
       end
     end
   end
@@ -57,5 +68,9 @@ class SubfoldersController < ApplicationController
 
     def folder_params
       params.require(:folder).permit(:name)
+    end
+
+    def folder_move_params
+      params.require(:moveto_folder_id)
     end
 end

@@ -1,0 +1,17 @@
+= form_for ([@parent_folder, @folder]),{url: move_folder_folder_path(@parent_folder, @folder)}  do |f|
+  #current
+    = f.label :現在のフォルダ：
+    = link_to @parent_folder.name, search_folder_path(@parent_folder), {id: 'current_folder',class: 'search_folder',remote: true}
+
+  #moveto_folder
+
+  %hr
+
+  #tree
+
+  = hidden_field_tag :authenticity_token, form_authenticity_token
+
+  %hr
+  .actions
+    = f.submit '移動する'
+

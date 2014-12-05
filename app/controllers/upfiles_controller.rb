@@ -23,10 +23,9 @@ class UpfilesController < ApplicationController
       if @upfile.update({folder_id: moveto_folder_id})
         format.html { redirect_to list_folder_path(moveto_folder_id), notice: '移動しました' }
       else
-        format.html { render :edit }
+        format.html { redirect_to list_folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
       end
     end
-
   end
 
   def download
