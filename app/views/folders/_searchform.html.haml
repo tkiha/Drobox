@@ -1,4 +1,4 @@
-= form_for ([@folder, @upfile]),{url: move_folder_upfile_path(@folder, @upfile)}  do |f|
+= form_for ("#{param[:form_for]}"),{url: "#{param[:url]}"} do |f|
   #current
     = f.label :現在のフォルダ：
     = link_to @folder.name, search_folder_path(@folder), {id: 'current_folder',class: 'search_folder',remote: true}
@@ -13,5 +13,5 @@
 
   %hr
   .actions
-    = f.submit '移動する'
+    = f.submit "#{param[:title]}する"
 

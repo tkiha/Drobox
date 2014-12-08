@@ -42,7 +42,7 @@ module ApplicationHelper
   def family_folders_selected_html(families)
     content_tag(:folder_selected) do
 
-      concat label_tag(:移動先フォルダ：)
+      concat label_tag(:選択フォルダ：)
       concat ' '
       concat link_to(families[:self][:name],
                      search_folder_path(families[:self][:id]),

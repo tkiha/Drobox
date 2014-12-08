@@ -21,4 +21,4 @@
 
 
 #treedialog
-  = render 'moveform'
+  = render 'folders/searchform', { param: { title: '移動', form_for: [@folder, @upfile], url: move_folder_upfile_path(@folder, @upfile) } }
