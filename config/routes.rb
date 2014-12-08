@@ -21,12 +21,12 @@ Rails.application.routes.draw do
     resources :upfiles do
       member do
         get :download
-        post :move
+        post :move, :copy
       end
     end
     resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show] do
       member do
-        post :move
+        post :move, :copy
       end
     end
   end

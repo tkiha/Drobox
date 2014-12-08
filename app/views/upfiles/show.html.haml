@@ -14,11 +14,16 @@
 \|
 = link_to '編集', edit_folder_upfile_path(@folder, @upfile)
 \|
-= link_to '移動', '', id: "showtree"
+= link_to '移動', '', id: "show_movetree"
+\|
+= link_to 'コピー', '', id: "show_copytree"
 \|
 = link_to '一覧へ', list_folder_path(@folder)
 
 
 
-#treedialog
+#movetreedialog
   = render 'folders/searchform', { param: { title: '移動', form_for: [@folder, @upfile], url: move_folder_upfile_path(@folder, @upfile) } }
+
+#copytreedialog
+  = render 'folders/searchform', { param: { title: 'コピー', form_for: [@folder, @upfile], url: copy_folder_upfile_path(@folder, @upfile) } }

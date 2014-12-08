@@ -10,10 +10,15 @@
 - parent_folder = @folder.parent_folder
 = link_to '編集', edit_folder_folder_path(parent_folder, @folder)
 \|
-= link_to '移動', '', id: "showtree"
+= link_to '移動', '', id: "show_movetree"
+\|
+= link_to 'コピー', '', id: "show_copytree"
 \|
 = link_to '一覧へ', list_folder_path(@folder)
 
 
-#treedialog
+#movetreedialog
   = render 'folders/searchform', { param: { title: '移動', form_for: [parent_folder, @folder], url: move_folder_folder_path(parent_folder, @folder) } }
+
+#copytreedialog
+  = render 'folders/searchform', { param: { title: 'コピー', form_for: [parent_folder, @folder], url: copy_folder_folder_path(parent_folder, @folder) } }

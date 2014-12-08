@@ -22,17 +22,27 @@ ready = ->
     $('#errmsg').text(res.error)
 
   # フォルダツリー
-  $("#showtree").click ->
-    $("#treedialog").dialog("open")
-    $("#current_folder").click()
+  $("#show_movetree").click ->
+    $("#movetreedialog").dialog("open")
+    $("#movetreedialog #current_folder").click()
     return false
 
-  $("#treedialog").dialog
+  $("#movetreedialog").dialog
     autoOpen: false,
     width: '350px',
-    title: 'フォルダ選択',
+    title: '移動先フォルダ選択',
     modal: true
 
+  $("#show_copytree").click ->
+    $("#copytreedialog").dialog("open")
+    $("#copytreedialog #current_folder").click()
+    return false
+
+  $("#copytreedialog").dialog
+    autoOpen: false,
+    width: '350px',
+    title: 'コピー先フォルダ選択',
+    modal: true
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
