@@ -2,26 +2,31 @@ class UpfilesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_user, :set_folder
   before_action :set_upfiles, only: [:new, :create]
-  before_action :set_upfile, only: [:move, :destroy, :show, :download, :edit, :update]
+  before_action :set_upfile, only: [:show, :edit, :update, :destroy, :download, :move, :copy]
 
-  def index
-  end
-
-  def show
-  end
 
   def new
     @upfile = @upfiles.build
   end
 
-  def edit
-  end
-
   def move
-    moveto_folder_id = upfile_move_params
+    moveto_folder_id = upfile_movecopy_params
     respond_to do |format|
       if @upfile.update({folder_id: moveto_folder_id})
         format.html { redirect_to list_folder_path(moveto_folder_id), notice: '移動しました' }
+      else
+        format.html { redirect_to list_folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
+      end
+    end
+  end
+
+  def copy
+    copyto_folder_id = upfile_movecopy_params
+    @upfile = @upfile.dup
+    @upfile.folder_id = copyto_folder_id
+    respond_to do |format|
+      if @upfile.save
+        format.html { redirect_to list_folder_path(copyto_folder_id), notice: 'コピーしました' }
       else
         format.html { redirect_to list_folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
       end
@@ -42,9 +47,7 @@ class UpfilesController < ApplicationController
     end
     rec_values[:user_id] = @user.id
 
-
     @upfile = @upfiles.build(rec_values)
-
     respond_to do |format|
       if @upfile.save
         format.html { redirect_to list_folder_path(@folder), notice: 'ファイルをアップロードしました' }
@@ -97,7 +100,7 @@ class UpfilesController < ApplicationController
       params.require(:upfile).permit(:name)
     end
 
-    def upfile_move_params
-      params.require(:moveto_folder_id)
+    def upfile_movecopy_params
+      params.require(:to_folder_id)
     end
 end

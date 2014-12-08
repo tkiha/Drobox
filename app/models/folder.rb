@@ -22,7 +22,6 @@ class Folder < ActiveRecord::Base
     self.updated_at
   end
 
-
   def get_family_folders
     families = {}
     families[:parent] = { id: self.parent_folder.id, name:self.parent_folder.name } unless self.parent_folder_id.blank?
@@ -42,7 +41,6 @@ class Folder < ActiveRecord::Base
     parents << self
     parent = self.parent_folder
     parent.all_parents(parents) if parent.present?
-
   end
 
   # folders/index.htmlに表示するデータを抽出し、並び順を適用する
@@ -69,9 +67,7 @@ class Folder < ActiveRecord::Base
       }
       list << rec
     end
-
     # 並べ替え
-    # list.reverse! # デフォルト
     orderby_item, orderby_value = ApplicationController.helpers.get_orderby_params(orderby)
     # p "#{orderby_value} #{Const.orderby.none.to_s}"
     if orderby_value != Const.orderby.none
@@ -79,9 +75,38 @@ class Folder < ActiveRecord::Base
       list.reverse! if orderby_value == Const.orderby.desc
       # p '+++'
     end
-
     list
   end
+
+  # フォルダをまるっとコピーする
+  def deepcopy(copyto_folder_id)
+    self.transaction do
+      copyfolder = self.dup
+      copyfolder.parent_folder_id = copyto_folder_id
+      copyfolder.save!
+      self.copyall(copyfolder)
+    end
+      true
+    rescue => e
+      errors.add(:parent_folder_id, "コピーできませんでした。#{e.message}")
+      false
+  end
+
+  def copyall(copyto_folder)
+    self.upfiles.each do |upfile|
+      copyfile = upfile.dup
+      copyfile.folder_id = copyto_folder.id
+      copyfile.save!
+    end
+    self.sub_folders.each do |subfolder|
+      copyfolder = subfolder.dup
+      copyfolder.parent_folder_id = copyto_folder.id
+      copyfolder.save!
+      subfolder.copyall(copyfolder)
+    end
+
+  end
+
 
   private
     def include_check

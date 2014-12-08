@@ -49,7 +49,7 @@ module ApplicationHelper
                      {class: 'search_folder',remote: true}
                     )
 
-      concat hidden_field_tag(:moveto_folder_id, families[:self][:id])
+      concat hidden_field_tag(:to_folder_id, families[:self][:id])
     end
 
   end
