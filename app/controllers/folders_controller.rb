@@ -4,12 +4,10 @@ class FoldersController < ApplicationController
   before_action :set_user
   before_action :set_folder
 
-
   def search
    # render json: { result: @folder.get_family_folders }
-   @search_result =  @folder.get_family_folders 
+   @search_result =  @folder.get_family_folders
   end
-
 
   private
     def set_user

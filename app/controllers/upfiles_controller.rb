@@ -5,6 +5,7 @@ class UpfilesController < ApplicationController
   before_action :set_upfile, only: [:show, :edit, :update, :destroy, :download, :move, :copy]
 
 
+
   def new
     @upfile = @upfiles.build
   end
@@ -83,12 +84,11 @@ class UpfilesController < ApplicationController
     def set_folder
       @folder = @user.folders.find(params[:folder_id])
     end
-     def set_upfiles
+    def set_upfiles
       @upfiles = @folder.upfiles
       p "---> #{@folder.inspect}"
     end
-
-   def set_upfile
+    def set_upfile
       @upfile = @folder.upfiles.find(params[:id])
     end
 

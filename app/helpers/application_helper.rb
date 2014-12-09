@@ -14,14 +14,14 @@ module ApplicationHelper
       unless families[:parent].blank?
         concat link_to(families[:parent][:name], 
                        search_folder_path(families[:parent][:id]),
-                       {class: 'search_folder',remote: true}
+                       { class: 'search_folder',remote: true }
                       )
         concat tag(:br)
         concat '|-'
       end
       concat link_to(families[:self][:name],
                      search_folder_path(families[:self][:id]),
-                     {class: 'search_folder',remote: true}
+                     { class: 'search_folder',remote: true }
                     )
       unless families[:child].blank?
         families[:child].each do |sub_folder|
@@ -30,7 +30,7 @@ module ApplicationHelper
           concat '|-'
           concat link_to(sub_folder[:name],
                          search_folder_path(sub_folder[:id]),
-                         {class: 'search_folder',remote: true}
+                         { class: 'search_folder',remote: true }
                         )
         end
       end
@@ -46,7 +46,7 @@ module ApplicationHelper
       concat ' '
       concat link_to(families[:self][:name],
                      search_folder_path(families[:self][:id]),
-                     {class: 'search_folder',remote: true}
+                     { class: 'search_folder',remote: true }
                     )
 
       concat hidden_field_tag(:to_folder_id, families[:self][:id])

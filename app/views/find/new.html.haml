@@ -1,0 +1,32 @@
+%h1 ファイル検索
+
+%hr
+= form_tag(find_result_path(@folder), { method: :post }) do
+
+  = label_tag :ファイル名
+  = text_field_tag :name, @input_name
+
+  %br
+
+  .actions
+    = submit_tag '検索'
+
+- if @upfiles.present?
+  %hr
+  %table
+    %tr
+      %th フォルダ
+      %th ファイル
+      %th 種類
+      %th 更新
+
+    - @upfiles.each do |upfile|
+      %tr
+        %td= file_link_tag(upfile.folder.parent_folder, upfile.folder)
+        %td= file_link_tag(upfile.folder, upfile)
+        %td= get_disp_type_name(upfile)
+        %td= get_disp_update_time(upfile)
+
+%hr
+
+= link_to '一覧へ', list_folder_path(@folder)
