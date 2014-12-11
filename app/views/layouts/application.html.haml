@@ -8,6 +8,10 @@
   %body
     - if user_signed_in?
       = link_to "ログアウト", destroy_user_session_path, :method => :delete
+      \|
+      = link_to "rootへ", list_folder_path
+      \|
+      = link_to "共有一覧へ", list_share_path
       %hr
 
     %p{class: "notice"}

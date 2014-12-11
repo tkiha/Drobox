@@ -1,0 +1,16 @@
+= form_for ([@folder.parent_folder, @folder]) do |f|
+  - if @folder.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@folder.errors.count, "error")} prohibited this folder from being saved:"
+      %ul
+        - @folder.errors.full_messages.each do |msg|
+          %li= msg
+  フォルダ：
+  = f.text_field :name
+  %hr
+  = f.fields_for :folder_shares do |s|
+    .field
+      = s.label :共有相手のメールアドレス
+      = s.text_field :name
+  .actions
+    = f.submit '保存'

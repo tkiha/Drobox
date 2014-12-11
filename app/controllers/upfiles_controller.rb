@@ -4,7 +4,11 @@ class UpfilesController < ApplicationController
   before_action :set_upfiles, only: [:new, :create]
   before_action :set_upfile, only: [:show, :edit, :update, :destroy, :download, :move, :copy]
 
+  def show
+  end
 
+  def edit
+  end
 
   def new
     @upfile = @upfiles.build

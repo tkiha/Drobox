@@ -16,15 +16,17 @@
     %th
     %th
     %th
+    %th
 
-  - list_folder = @folder.list_folder_source(@orderby)
+  - list_folder = get_list_folder_source(@folder, @orderby)
   - list_folder.each do |f|
     %tr
-      %td= file_link_tag(@folder, f[:object])
+      %td= file_link_tag(f[:object])
       %td= get_disp_type_name(f[:object])
       %td= get_disp_update_time(f[:object])
-      %td= file_view_tag(@folder, f[:object])
-      %td= file_edit_tag(@folder, f[:object])
+      %td= file_view_tag(f[:object])
+      %td= file_edit_tag(f[:object])
+      %td= share_link_tag(f[:object])
       %td= link_to '削除', [@folder, f[:object]], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
 %hr

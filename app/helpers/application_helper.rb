@@ -41,14 +41,12 @@ module ApplicationHelper
 
   def family_folders_selected_html(families)
     content_tag(:folder_selected) do
-
       concat label_tag(:選択フォルダ：)
       concat ' '
       concat link_to(families[:self][:name],
                      search_folder_path(families[:self][:id]),
                      { class: 'search_folder',remote: true }
                     )
-
       concat hidden_field_tag(:to_folder_id, families[:self][:id])
     end
 
@@ -63,19 +61,6 @@ module ApplicationHelper
         concat '  ->  ' if index!=0
       end
     end
-  end
-
-  def get_orderby_params(orderby)
-    orderby_item  = Const.orderby.field.file
-    orderby_value = Const.orderby.none
-    orderby.each do |key, value|
-      if value != Const.orderby.none
-        orderby_item  = key
-        orderby_value = value
-      end
-    end
-
-    return orderby_item,orderby_value.to_i
   end
 
 end

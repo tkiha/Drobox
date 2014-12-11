@@ -4,6 +4,12 @@ class SubfoldersController < ApplicationController
   before_action :set_parent_folder
   before_action :set_folder, only: [:show, :edit, :update, :destroy, :move, :copy]
 
+  def show
+  end
+
+  def edit
+  end
+
   def new
     @folder = @parent_folder.sub_folders.build
   end
