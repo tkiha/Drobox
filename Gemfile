@@ -43,6 +43,7 @@ gem 'devise'
 gem 'jquery-ui-rails'
 gem 'rails-i18n'
 gem 'settingslogic'
+gem "nested_form"
 
 group :development, :test do
     gem 'hirb'

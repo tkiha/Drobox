@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   match 'findresult(/:folder_id)' => 'find#show', :as => 'find_result', :defaults => {folder_id: nil}, :via => :post
 
   match 'foldershare/:folder_id/new' => 'foldershares#new', :as => 'new_foldershare', :via => :get
+  match 'foldershare/:folder_id/edit' => 'foldershares#edit', :as => 'edit_foldershare', :via => :patch
 
   resources :folders, only: [:index] do
     resources :upfiles do

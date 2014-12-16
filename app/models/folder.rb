@@ -9,7 +9,7 @@ class Folder < ActiveRecord::Base
   has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id
   belongs_to :parent_folder, class_name: :Folder, foreign_key: :parent_folder_id
 
-scope :root_folder, -> { find_by(parent_folder_id: nil) }
+  scope :root_folder, -> { find_by(parent_folder_id: nil) }
   scope :get_folder_or_root, ->(folder_id){
     folder_id.blank? ? root_folder : find(folder_id)
   }
@@ -46,7 +46,13 @@ scope :root_folder, -> { find_by(parent_folder_id: nil) }
 
   # フォルダをまるっとコピーする
   def deepcopy(copyto_folder_id)
+    p "***#{self.id} ***#{copyto_folder_id} "
+    if self.id.to_s == copyto_folder_id
+      errors.add(:parent_folder_id, "同じフォルダへはコピーできません。")
+      return false
+    end
     self.transaction do
+      self.id == copyto_folder_id
       copyfolder = self.dup
       copyfolder.parent_folder_id = copyto_folder_id
       copyfolder.save!

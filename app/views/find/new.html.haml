@@ -22,8 +22,8 @@
 
     - @upfiles.each do |upfile|
       %tr
-        %td= file_link_tag(upfile.folder.parent_folder, upfile.folder)
-        %td= file_link_tag(upfile.folder, upfile)
+        %td= file_link_tag(upfile.folder)
+        %td= file_link_tag(upfile)
         %td= get_disp_type_name(upfile)
         %td= get_disp_update_time(upfile)
 
