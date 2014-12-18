@@ -12,9 +12,12 @@ class User < ActiveRecord::Base
   has_many :from_share_files, through: :from_shares, source: :upfile
 
   has_many :folders
-  has_many :folder_shares, class_name: :FolderShare, foreign_key: :from_user_id
+  has_many :from_folder_shares, class_name: :FolderShare, foreign_key: :from_user_id
+  has_many :to_folder_shares, class_name: :FolderShare, foreign_key: :to_user_id
   # ユーザーが共有しているフォルダ
-  has_many :from_share_folders, through: :folder_shares, source: :folder
+  has_many :from_share_folders, through: :from_folder_shares, source: :folder
+  # ユーザーが共有されているフォルダ
+  has_many :to_share_folders, through: :to_folder_shares, source: :folder
 
   private
   def generate_root_folder

@@ -38,17 +38,14 @@ module FoldersHelper
       return link_to '共有', ''
     end
   end
-  def sharelist_header_tag(field, orderby)
+  def sharelist_header_tag(field, orderby, link_path)
     field_name = get_list_header_title(field)
     now_orderby, next_orderby, arrow =
       get_list_header_orderby(field, orderby)
 
     field_name << arrow
 
-    link_to field_name, list_share_path(
-      f: field,
-      o: next_orderby,
-    )
+    link_to field_name, "#{link_path}?f=#{field}&o=#{next_orderby}"
   end
 
   def filelist_header_tag(field, folder, orderby)
@@ -105,19 +102,20 @@ module FoldersHelper
     end
     return orderby_item,orderby_value.to_i
   end
-  
-  def get_list_share_source(orderby)
+
+  def get_list_fromshare_source(orderby)
     itemlist = []
-    add_itemlist_share_folder(itemlist)
+    add_itemlist_fromshare_folders(itemlist)
     # add_itemlist_upfile(itemlist, folder)
-    # itemlist_orderby(itemlist, orderby)
+    itemlist_orderby(itemlist, orderby)
+    itemlist.uniq!
     p "-------#{itemlist}"
     itemlist
   end
 
-  def add_itemlist_share_folder(itemlist)
-    # サブフォルダを抽出
-    User.find(current_user).from_share_folders.each do |f|
+  def add_itemlist_fromshare_folders(itemlist)
+    # 共有しているフォルダを抽出
+    current_user.from_share_folders.each do |f|
       rec = {
         Const.orderby.field.file => f.name,
         Const.orderby.field.type => get_disp_type_name(f),
@@ -130,14 +128,14 @@ module FoldersHelper
 
   def get_list_folder_source(folder, orderby)
     itemlist = []
-    add_itemlist_sub_folder(itemlist, folder)
-    add_itemlist_upfile(itemlist, folder)
+    add_itemlist_sub_folders(itemlist, folder)
+    add_itemlist_upfiles(itemlist, folder)
     itemlist_orderby(itemlist, orderby)
     p "-------#{itemlist}"
     itemlist
   end
 
-  def add_itemlist_sub_folder(itemlist, folder)
+  def add_itemlist_sub_folders(itemlist, folder)
     # サブフォルダを抽出
     folder.sub_folders.each do |f|
       rec = {
@@ -150,7 +148,7 @@ module FoldersHelper
     end
   end
 
-  def add_itemlist_upfile(itemlist, folder)
+  def add_itemlist_upfiles(itemlist, folder)
     # フォルダ内のファイルを抽出
     folder.upfiles.each do |f|
       rec = {

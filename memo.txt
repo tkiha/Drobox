@@ -15,6 +15,9 @@ rails generate migration RemoveNameFromUsers name:string
 rails g migration RenameFileIdToFileShare
 rails generate migration AddUseridToUpfile
 
+rails generate migration RemoveNameFromFolderShare name:string
+rails generate migration RemoveNameFromFileShare name:string
+
 rails destroy model upfile
 
 ActiveRecord::Migration.drop_table(:file_shares)

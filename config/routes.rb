@@ -15,14 +15,15 @@ Rails.application.routes.draw do
     # get "/users/sign_in" => "devise/registrations#new", as: :new_user_session
   end
 
-  match 'sharelist' => 'shares#index', :as => 'list_share', :via => :get
+  match 'fromsharelist' => 'shares#fromshares', :as => 'list_from_share', :via => :get
+  match 'tosharelist' => 'shares#toshares', :as => 'list_to_share', :via => :get
   match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
   match 'search(/:id)' => 'folders#search', :as => 'search_folder', :defaults => {id: nil}, :via => :get
   match 'find(/:folder_id)' => 'find#new', :as => 'find', :defaults => {folder_id: nil}, :via => :get
   match 'findresult(/:folder_id)' => 'find#show', :as => 'find_result', :defaults => {folder_id: nil}, :via => :post
 
   match 'foldershare/:folder_id/new' => 'foldershares#new', :as => 'new_foldershare', :via => :get
-  match 'foldershare/:folder_id/edit' => 'foldershares#edit', :as => 'edit_foldershare', :via => :patch
+  match 'foldershare/:folder_id/update' => 'foldershares#update', :as => 'update_foldershare', :via => :patch
 
   resources :folders, only: [:index] do
     resources :upfiles do

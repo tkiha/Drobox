@@ -1,4 +1,4 @@
-= nested_form_for(@folder, url: :edit_foldershare ) do |f|
+= nested_form_for(@folder, url: :update_foldershare ) do |f|
   - if @folder.errors.any?
     #error_explanation
       %h2= "#{pluralize(@folder.errors.count, "error")} prohibited this folder from being saved:"

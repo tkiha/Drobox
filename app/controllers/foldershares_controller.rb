@@ -3,12 +3,17 @@ class FoldersharesController < ApplicationController
   before_action :set_folder
 
   def new
-    @folder.folder_shares.build
+    @folder.folder_shares.build if @folder.folder_shares.blank?
   end
 
-  def edit
-    @folder.folder_shares.build
-    p "--> #{params.inspect}"
+  def update
+    respond_to do |format|
+      if @folder.update(update_params)
+        format.html { redirect_to folder_folder_path(@folder.parent_folder, @folder), notice: "#{@folder.name}を共有しました" }
+      else
+        format.html { render :edit }
+      end
+    end
   end
 
   private
@@ -16,7 +21,10 @@ class FoldersharesController < ApplicationController
       @folder = current_user.folders.find(params[:folder_id])
     end
 
-    def edit_params
-          params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :to_user_id, :_destroy])
+    def update_params
+      params[:folder][:folder_shares_attributes].each do |item|
+        item.last[:from_user_id] = current_user.id
+      end
+      params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])
     end
 end

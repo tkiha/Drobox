@@ -1,0 +1,25 @@
+%h1 共有した一覧
+
+%hr
+
+%table
+  %tr
+    %th= sharelist_header_tag(Const.orderby.field.file,  @orderby, list_from_share_path)
+    %th= sharelist_header_tag(Const.orderby.field.type,  @orderby, list_from_share_path)
+    %th= sharelist_header_tag(Const.orderby.field.time,  @orderby, list_from_share_path)
+    %th
+    %th
+    %th
+
+  - list_folder = get_list_fromshare_source(@orderby)
+  - list_folder.each do |f|
+    %tr
+      %td= file_link_tag(f[:object])
+      %td= get_disp_type_name(f[:object])
+      %td= get_disp_update_time(f[:object])
+      %td= file_view_tag(f[:object])
+      %td= file_edit_tag(f[:object])
+      %td= link_to '共有解除','' , :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
+
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126083837) do
+ActiveRecord::Schema.define(version: 20141216084832) do
 
   create_table "file_share_tos", force: true do |t|
     t.integer  "file_share_id"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20141126083837) do
   end
 
   create_table "file_shares", force: true do |t|
-    t.string   "name"
     t.integer  "upfile_id"
     t.integer  "from_user_id"
     t.integer  "to_user_id"
@@ -37,7 +36,6 @@ ActiveRecord::Schema.define(version: 20141126083837) do
   end
 
   create_table "folder_shares", force: true do |t|
-    t.string   "name"
     t.integer  "folder_id"
     t.integer  "from_user_id"
     t.integer  "to_user_id"

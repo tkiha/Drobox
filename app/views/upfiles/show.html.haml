@@ -7,6 +7,9 @@
 %p
   %strong 更新日時:
   = get_disp_update_time(@upfile)
+%p
+  %strong 所有者:
+  = @upfile.own_user.email
 
 %hr
 

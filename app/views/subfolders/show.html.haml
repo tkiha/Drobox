@@ -4,6 +4,9 @@
 %p
   %strong 更新日時:
   = get_disp_update_time(@folder)
+%p
+  %strong 所有者:
+  = @folder.own_user.email
 
 %hr
 
@@ -14,7 +17,7 @@
 \|
 = link_to 'コピー', '', id: "show_copytree"
 \|
-= link_to '一覧へ', list_folder_path(@folder)
+= link_to '一覧へ', list_folder_path(parent_folder)
 
 
 #movetreedialog
