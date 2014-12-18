@@ -16,7 +16,12 @@ class FoldersharesController < ApplicationController
     end
   end
 
-  private
+  def destroy
+    @folder.folder_shares.destroy_all
+    redirect_to list_from_share_path, notice: '共有解除しました'
+  end
+
+private
     def set_folder
       @folder = current_user.folders.find(params[:folder_id])
     end

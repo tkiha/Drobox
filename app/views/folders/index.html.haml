@@ -13,10 +13,6 @@
     %th= filelist_header_tag(Const.orderby.field.file, @folder, @orderby)
     %th= filelist_header_tag(Const.orderby.field.type, @folder, @orderby)
     %th= filelist_header_tag(Const.orderby.field.time, @folder, @orderby)
-    %th
-    %th
-    %th
-    %th
 
   - list_folder = get_list_folder_source(@folder, @orderby)
   - list_folder.each do |f|

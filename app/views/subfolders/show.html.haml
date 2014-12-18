@@ -7,7 +7,9 @@
 %p
   %strong 所有者:
   = @folder.own_user.email
-
+%p
+  %strong 共有相手:
+  = @folder.to_share_users.pluck(:email).uniq.join(', ')
 %hr
 
 - parent_folder = @folder.parent_folder
@@ -17,7 +19,7 @@
 \|
 = link_to 'コピー', '', id: "show_copytree"
 \|
-= link_to '一覧へ', list_folder_path(parent_folder)
+= link_to '戻る', :back
 
 
 #movetreedialog

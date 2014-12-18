@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   match 'foldershare/:folder_id/new' => 'foldershares#new', :as => 'new_foldershare', :via => :get
   match 'foldershare/:folder_id/update' => 'foldershares#update', :as => 'update_foldershare', :via => :patch
+  match 'foldershare/:folder_id/destroy' => 'foldershares#destroy', :as => 'destroy_foldershare', :via => :delete
 
   resources :folders, only: [:index] do
     resources :upfiles do

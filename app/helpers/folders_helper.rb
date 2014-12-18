@@ -109,7 +109,6 @@ module FoldersHelper
     # add_itemlist_upfile(itemlist, folder)
     itemlist_orderby(itemlist, orderby)
     itemlist.uniq!
-    p "-------#{itemlist}"
     itemlist
   end
 
@@ -131,7 +130,6 @@ module FoldersHelper
     add_itemlist_sub_folders(itemlist, folder)
     add_itemlist_upfiles(itemlist, folder)
     itemlist_orderby(itemlist, orderby)
-    p "-------#{itemlist}"
     itemlist
   end
 
@@ -163,11 +161,9 @@ module FoldersHelper
 
   def itemlist_orderby(itemlist, orderby)
     orderby_item, orderby_value = get_orderby_params(orderby)
-    # p "#{orderby_value} #{Const.orderby.none.to_s}"
     if orderby_value != Const.orderby.none
-      itemlist.sort_by! {|item| item[orderby_item]}
+      itemlist.sort_by! { |item| item[orderby_item] }
       itemlist.reverse! if orderby_value == Const.orderby.desc
-      # p '+++'
     end
   end
 end
