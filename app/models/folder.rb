@@ -2,7 +2,7 @@ class Folder < ActiveRecord::Base
   before_destroy :include_check
   has_many :upfiles
   belongs_to :own_user, class_name: :User, foreign_key: :user_id
-  has_many :folder_shares
+  has_many :folder_shares, :dependent => :destroy
   accepts_nested_attributes_for :folder_shares, allow_destroy: true
   has_many :from_share_users, through: :folder_shares, source: :from_user
   has_many :to_share_users, through: :folder_shares, source: :to_user

@@ -9,9 +9,10 @@ class FoldersharesController < ApplicationController
   def update
     respond_to do |format|
       if @folder.update(update_params)
+        sendmail
         format.html { redirect_to folder_folder_path(@folder.parent_folder, @folder), notice: "#{@folder.name}を共有しました" }
       else
-        format.html { render :edit }
+        format.html { render :new }
       end
     end
   end
@@ -31,5 +32,12 @@ class FoldersharesController < ApplicationController
         item.last[:from_user_id] = current_user.id
       end
       params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])
+    end
+
+    def sendmail
+      @folder.folder_shares.each do |item|
+        NoticeMailer.sendmail_share(@folder, current_user, item.to_user).deliver
+        p "メール本文-->#{ActionMailer::Base.deliveries.last.body}"
+      end
     end
 end

@@ -5,15 +5,14 @@
       %ul
         - @folder.errors.full_messages.each do |msg|
           %li= msg
-  フォルダ：
-  = f.text_field :name
+  共有するフォルダ：#{@folder.name}
   %hr
   %tr
     %th= "共有相手"
     %th
     = f.fields_for :folder_shares do |s|
       %tr
-        = s.collection_select :to_user_id, User.all, :id, :email
+        = s.collection_select :to_user_id, User.all, :id, :email, include_blank: :true
         = s.link_to_remove "削除"
   = f.link_to_add "共有相手を追加", :folder_shares
   %br

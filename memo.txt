@@ -30,7 +30,7 @@ rails g scaffold_controller folder
 rails destroy scaffold_controller folder
 rails g scaffold_controller upfile
 
-
+rails g mailer NoticeMailer sendmail_share
 
 class Upfile < ActiveRecord::Base
   belongs_to :folder

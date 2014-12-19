@@ -12,10 +12,14 @@ ja:
       folder:
         name: "フォルダ名"
         user_id: "所有アカウント"
+      folder_share:
+        to_user_id: "フォルダ共有相手"
+        folder_id: "フォルダ"
     models:
       user: "アカウント"
       upfile: "ファイル"
       folder: "フォルダ"
+      folder_share: "共有フォルダ"
   devise:
     confirmations:
       new:
