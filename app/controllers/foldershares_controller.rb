@@ -21,7 +21,7 @@ class FoldersharesController < ApplicationController
     redirect_to list_from_share_path, notice: '共有解除しました'
   end
 
-private
+  private
     def set_folder
       @folder = current_user.folders.find(params[:folder_id])
     end
