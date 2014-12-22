@@ -47,7 +47,7 @@ class UpfilesController < ApplicationController
       rec_values[:file_binary] = upload_file.read
       rec_values[:name] = upload_file.original_filename
     end
-    rec_values[:user_id] = @user.id
+    rec_values[:user_id] = current_user.id
 
     @upfile = @upfiles.build(rec_values)
     respond_to do |format|

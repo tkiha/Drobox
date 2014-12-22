@@ -31,13 +31,24 @@ module FoldersHelper
 
   def share_link_tag(target_object)
     if target_object.kind_of?(Folder)
-      return link_to '共有', new_foldershare_path(target_object)
+      return link_to '共有', new_foldershares_path(target_object)
     end
 
     if target_object.kind_of?(Upfile)
-      return link_to '共有', ''
+      return link_to '共有', new_fileshares_path(target_object)
     end
   end
+
+  def destroy_share_link_tag(target_object)
+    if target_object.kind_of?(Folder)
+      return link_to '共有解除',destroy_foldershares_path(target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+    end
+
+    if target_object.kind_of?(Upfile)
+      return link_to '共有解除',destroy_fileshares_path(target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+    end
+  end
+
   def sharelist_header_tag(field, orderby, link_path)
     field_name = get_list_header_title(field)
     now_orderby, next_orderby, arrow =
@@ -106,15 +117,28 @@ module FoldersHelper
   def get_list_fromshare_source(orderby)
     itemlist = []
     add_itemlist_fromshare_folders(itemlist)
-    # add_itemlist_upfile(itemlist, folder)
+    add_itemlist_fromshare_upfiles(itemlist)
     itemlist_orderby(itemlist, orderby)
     itemlist.uniq!
     itemlist
   end
 
   def add_itemlist_fromshare_folders(itemlist)
-    # 共有しているフォルダを抽出
+    # 共有したフォルダを抽出
     current_user.from_share_folders.each do |f|
+      rec = {
+        Const.orderby.field.file => f.name,
+        Const.orderby.field.type => get_disp_type_name(f),
+        Const.orderby.field.time => get_disp_update_time(f),
+        object: f
+      }
+      itemlist << rec
+    end
+  end
+
+  def add_itemlist_fromshare_upfiles(itemlist)
+    # 共有したファイルを抽出
+    current_user.from_share_files.each do |f|
       rec = {
         Const.orderby.field.file => f.name,
         Const.orderby.field.type => get_disp_type_name(f),

@@ -28,7 +28,7 @@ class FoldersharesController < ApplicationController
     end
 
     def update_params
-      params[:folder][:folder_shares_attributes].each do |item|
+      params[:folder].try("[]",:folder_shares_attributes).try(:each) do |item|
         item.last[:from_user_id] = current_user.id
       end
       params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])

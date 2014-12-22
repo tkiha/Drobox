@@ -16,7 +16,4 @@
       %td= get_disp_update_time(f[:object])
       %td= file_view_tag(f[:object])
       %td= file_edit_tag(f[:object])
-      %td= link_to '共有解除',destroy_foldershare_path(f[:object]) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
-
-
-
+      %td= destroy_share_link_tag(f[:object])

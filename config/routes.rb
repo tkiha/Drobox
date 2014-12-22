@@ -22,9 +22,13 @@ Rails.application.routes.draw do
   match 'find(/:folder_id)' => 'find#new', :as => 'find', :defaults => {folder_id: nil}, :via => :get
   match 'findresult(/:folder_id)' => 'find#show', :as => 'find_result', :defaults => {folder_id: nil}, :via => :post
 
-  match 'foldershare/:folder_id/new' => 'foldershares#new', :as => 'new_foldershare', :via => :get
-  match 'foldershare/:folder_id/update' => 'foldershares#update', :as => 'update_foldershare', :via => :patch
-  match 'foldershare/:folder_id/destroy' => 'foldershares#destroy', :as => 'destroy_foldershare', :via => :delete
+  match 'foldershares/:folder_id/new' => 'foldershares#new', :as => 'new_foldershares', :via => :get
+  match 'foldershares/:folder_id/update' => 'foldershares#update', :as => 'update_foldershares', :via => :patch
+  match 'foldershares/:folder_id/destroy' => 'foldershares#destroy', :as => 'destroy_foldershares', :via => :delete
+
+  match 'fileshares/:upfile_id/new' => 'fileshares#new', :as => 'new_fileshares', :via => :get
+  match 'fileshares/:upfile_id/update' => 'fileshares#update', :as => 'update_fileshares', :via => :patch
+  match 'fileshares/:upfile_id/destroy' => 'fileshares#destroy', :as => 'destroy_fileshares', :via => :delete
 
   resources :folders, only: [:index] do
     resources :upfiles do

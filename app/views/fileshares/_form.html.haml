@@ -1,0 +1,21 @@
+= nested_form_for(@upfile, url: :update_fileshares ) do |f|
+  - if @upfile.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@upfile.errors.count, "error")} prohibited this folder from being saved:"
+      %ul
+        - @upfile.errors.full_messages.each do |msg|
+          %li= msg
+  共有するファイル：#{@upfile.name}
+  %hr
+  %tr
+    %th= "共有相手"
+    %th
+    = f.fields_for :file_shares do |s|
+      %tr
+        = s.collection_select :to_user_id, User.all, :id, :email, include_blank: :true
+        = s.link_to_remove "削除"
+  = f.link_to_add "共有相手を追加", :file_shares
+  %br
+  %hr
+  .actions
+    = f.submit '保存'

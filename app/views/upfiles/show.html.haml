@@ -10,6 +10,9 @@
 %p
   %strong 所有者:
   = @upfile.own_user.email
+%p
+  %strong 共有相手:
+  = @upfile.to_share_users.pluck(:email).uniq.join(', ')
 
 %hr
 
@@ -21,7 +24,7 @@
 \|
 = link_to 'コピー', '', id: "show_copytree"
 \|
-= link_to '戻る', :back
+= link_to '一覧へ', list_folder_path(@folder)
 
 
 
