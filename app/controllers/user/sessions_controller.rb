@@ -6,19 +6,28 @@ class User::SessionsController < Devise::SessionsController
       # respond_with(resource, serialize_options(resource))
       xhr_failure
     else
-      super
+       p "new-2"
+      self.resource = resource_class.new(sign_in_params)
+      clean_up_passwords(resource)
+      redirect_to root_path
     end
   end
 
 
   def create
+    p "create"
     if request.xhr?
+      p "create-1"
       opts = auth_options
       opts[:recall] = "#{controller_path}#xhr_failure"
+      p "create-1-1 #{opts.inspect}"
       self.resource = warden.authenticate!(opts)
+      p "create-1-2 #{self.resource.inspect}"
       sign_in(resource_name, resource)
+      p "create-1-3#{self.resource.inspect}"
       xhr_success
     else
+       p "create-2"
       super
     end
   end
