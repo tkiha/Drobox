@@ -58,15 +58,8 @@ class SubfoldersController < ApplicationController
   end
 
   def destroy
-    respond_to do |format|
-      if @folder.destroy
-        format.html { redirect_to list_folder_path(@parent_folder), notice: 'フォルダを削除しました' }
-      else
-        p @folder.errors.messages[:custom_check]
-        format.html { redirect_to folders_url, notice: @folder.errors.messages[:custom_check].join }
-
-      end
-    end
+    @folder.destroy
+    redirect_to list_folder_path(@parent_folder), notice: 'フォルダを削除しました'
   end
 
   private

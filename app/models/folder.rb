@@ -1,13 +1,12 @@
 class Folder < ActiveRecord::Base
-  before_destroy :include_check
-  has_many :upfiles
+  has_many :upfiles, dependent: :destroy
   belongs_to :own_user, class_name: :User, foreign_key: :user_id
   has_many :folder_shares, :dependent => :destroy
   accepts_nested_attributes_for :folder_shares, allow_destroy: true
   has_many :from_share_users, through: :folder_shares, source: :from_user
   has_many :to_share_users, through: :folder_shares, source: :to_user
 
-  has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id
+  has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id, dependent: :destroy
   belongs_to :parent_folder, class_name: :Folder, foreign_key: :parent_folder_id
 
   scope :root_folder, -> { find_by(parent_folder_id: nil) }
@@ -82,17 +81,6 @@ class Folder < ActiveRecord::Base
 
 
   private
-    def include_check
-      if self.sub_folders.present?
-        errors[:custom_check] << "サブフォルダがあるので削除できません"
-        return false
-      end
-      if self.upfiles.present?
-        errors[:custom_check] << "フォルダの中にファイルがあるので削除できません"
-        return false
-      end
-    end
-
     def my_parent_folder
       return if self.parent_folder_id.blank?
 
