@@ -5,13 +5,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :validatable, :confirmable
   after_save :generate_root_folder
-  
-  has_many :upfiles
-  has_many :from_shares, class_name: :FileShare, foreign_key: :from_user_id
-  # ユーザーが共有しているファイル
-  has_many :from_share_files, through: :from_shares, source: :upfile
 
-  has_many :folders
+  has_many :upfiles, dependent: :destroy
+  has_many :from_upfile_shares, class_name: :FileShare, foreign_key: :from_user_id
+  has_many :to_upfile_shares, class_name: :FileShare, foreign_key: :to_user_id
+  # ユーザーが共有しているファイル
+  has_many :from_share_files, through: :from_upfile_shares, source: :upfile
+  # ユーザーが共有されているファイル
+  has_many :to_share_files, through: :to_upfile_shares, source: :upfile
+
+  has_many :folders, dependent: :destroy
   has_many :from_folder_shares, class_name: :FolderShare, foreign_key: :from_user_id
   has_many :to_folder_shares, class_name: :FolderShare, foreign_key: :to_user_id
   # ユーザーが共有しているフォルダ

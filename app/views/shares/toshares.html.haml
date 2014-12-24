@@ -4,9 +4,10 @@
 
 %table
   %tr
-    %th= sharelist_header_tag(Const.orderby.field.file,  @orderby, list_from_share_path)
-    %th= sharelist_header_tag(Const.orderby.field.type,  @orderby, list_from_share_path)
-    %th= sharelist_header_tag(Const.orderby.field.time,  @orderby, list_from_share_path)
+    %th= sharelist_header_tag(Const.orderby.field.file,  @orderby, list_to_share_path)
+    %th= sharelist_header_tag(Const.orderby.field.type,  @orderby, list_to_share_path)
+    %th= sharelist_header_tag(Const.orderby.field.time,  @orderby, list_to_share_path)
+    %th= sharelist_header_tag(Const.orderby.field.owner,  @orderby, list_to_share_path)
 
   - list_toshare = get_list_toshare_source(@orderby)
   - list_toshare.each do |f|
@@ -14,5 +15,5 @@
       %td= file_link_tag(f[:object])
       %td= get_disp_type_name(f[:object])
       %td= get_disp_update_time(f[:object])
+      %td= get_disp_own_user_name(f[:object])
       %td= file_view_tag(f[:object])
-      %td= file_edit_tag(f[:object])

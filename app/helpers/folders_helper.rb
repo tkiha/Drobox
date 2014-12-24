@@ -80,6 +80,8 @@ module FoldersHelper
         '種別'
       when Const.orderby.field.time
         '更新'
+      when Const.orderby.field.owner
+        '所有者'
     end
   end
 
@@ -112,6 +114,43 @@ module FoldersHelper
       end
     end
     return orderby_item,orderby_value.to_i
+  end
+
+  def get_list_toshare_source(orderby)
+    itemlist = []
+    add_itemlist_toshare_folders(itemlist)
+    add_itemlist_toshare_upfiles(itemlist)
+    itemlist_orderby(itemlist, orderby)
+    itemlist.uniq!
+    itemlist
+  end
+
+  def add_itemlist_toshare_folders(itemlist)
+    # 共有されたフォルダを抽出
+    current_user.to_share_folders.each do |f|
+      rec = {
+        Const.orderby.field.file => f.name,
+        Const.orderby.field.type => get_disp_type_name(f),
+        Const.orderby.field.time => get_disp_update_time(f),
+        Const.orderby.field.owner => get_disp_own_user_name(f),
+        object: f
+      }
+      itemlist << rec
+    end
+  end
+
+  def add_itemlist_toshare_upfiles(itemlist)
+    # 共有されたファイルを抽出
+    current_user.to_share_files.each do |f|
+      rec = {
+        Const.orderby.field.file => f.name,
+        Const.orderby.field.type => get_disp_type_name(f),
+        Const.orderby.field.time => get_disp_update_time(f),
+        Const.orderby.field.owner => get_disp_own_user_name(f),
+        object: f
+      }
+      itemlist << rec
+    end
   end
 
   def get_list_fromshare_source(orderby)

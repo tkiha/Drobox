@@ -9,6 +9,10 @@ module ApplicationHelper
     target_object.updated_at.to_s(:db)
   end
 
+  def get_disp_own_user_name(target_object)
+    target_object.own_user.try(:email).to_s
+  end
+
   def family_folders_html(families)
     content_tag(:folder_tree) do
       unless families[:parent].blank?
