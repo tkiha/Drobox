@@ -1,4 +1,4 @@
-= nested_form_for(@upfile, url: :update_fileshares ) do |f|
+= nested_form_for(@upfile, :url => url_for(:controller => 'fileshares', :action => 'update') ) do |f|
   - if @upfile.errors.any?
     #error_explanation
       %h2= "#{pluralize(@upfile.errors.count, "error")} prohibited this folder from being saved:"

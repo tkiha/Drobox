@@ -24,7 +24,7 @@ class FilesharesController < ApplicationController
 
   private
     def set_upfile
-      @upfile = current_user.upfiles.find(params[:upfile_id])
+      @upfile = current_user.upfiles.find(params[:id])
     end
 
     def update_params

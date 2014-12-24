@@ -10,7 +10,7 @@ class FoldersharesController < ApplicationController
     respond_to do |format|
       if @folder.update(update_params)
         sendmail
-        format.html { redirect_to folder_folder_path(@folder.parent_folder, @folder), notice: "#{@folder.name}を共有しました" }
+        format.html { redirect_to folder_folder_path(@folder.parent_folder_id, @folder), notice: "#{@folder.name}を共有しました" }
       else
         format.html { render :new }
       end
@@ -24,7 +24,7 @@ class FoldersharesController < ApplicationController
 
   private
     def set_folder
-      @folder = current_user.folders.find(params[:folder_id])
+      @folder = current_user.folders.find(params[:id])
     end
 
     def update_params

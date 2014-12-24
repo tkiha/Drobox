@@ -7,7 +7,7 @@ class FindController < ApplicationController
 
   def show
     @input_name = find_params
-    @upfiles = current_user.upfiles.where('name like ?', "%#{@input_name}%").order(:name)
+    @upfiles = current_user.upfiles.where('name like ?',  "%#{@input_name}%").order(:name)
     flash.now[:notice] = "検索結果：#{@upfiles.count}件"
     render action: :new
   end

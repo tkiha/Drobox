@@ -31,21 +31,21 @@ module FoldersHelper
 
   def share_link_tag(target_object)
     if target_object.kind_of?(Folder)
-      return link_to '共有', new_foldershares_path(target_object)
+      return link_to '共有', newshares_folder_folder_path(target_object.parent_folder_id, target_object)
     end
 
     if target_object.kind_of?(Upfile)
-      return link_to '共有', new_fileshares_path(target_object)
+      return link_to '共有', newshares_folder_upfile_path(target_object.folder_id, target_object)
     end
   end
 
   def destroy_share_link_tag(target_object)
     if target_object.kind_of?(Folder)
-      return link_to '共有解除',destroy_foldershares_path(target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+      return link_to '共有解除',destroyshares_folder_folder_path(target_object.parent_folder_id, target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
     end
 
     if target_object.kind_of?(Upfile)
-      return link_to '共有解除',destroy_fileshares_path(target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+      return link_to '共有解除',destroyshares_folder_upfile_path(target_object.folder_id, target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
     end
   end
 

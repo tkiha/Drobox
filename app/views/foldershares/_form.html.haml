@@ -1,4 +1,4 @@
-= nested_form_for(@folder, url: :update_foldershares ) do |f|
+= nested_form_for(@folder, :url => url_for(:controller => 'foldershares', :action => 'update')) do |f|
   - if @folder.errors.any?
     #error_explanation
       %h2= "#{pluralize(@folder.errors.count, "error")} prohibited this folder from being saved:"

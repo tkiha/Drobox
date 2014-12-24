@@ -6,7 +6,7 @@ class User::SessionsController < Devise::SessionsController
       # respond_with(resource, serialize_options(resource))
       xhr_failure
     else
-       p "new-2"
+      p "new-2"
       self.resource = resource_class.new(sign_in_params)
       clean_up_passwords(resource)
       redirect_to root_path
