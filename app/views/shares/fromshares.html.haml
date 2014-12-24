@@ -8,12 +8,12 @@
     %th= sharelist_header_tag(Const.orderby.field.type,  @orderby, list_from_share_path)
     %th= sharelist_header_tag(Const.orderby.field.time,  @orderby, list_from_share_path)
 
-  - list_fromshare = get_list_fromshare_source(@orderby)
-  - list_fromshare.each do |f|
+  - fromshare_items = get_fromshare_items(@orderby)
+  - fromshare_items.each do |i|
     %tr
-      %td= file_link_tag(f[:object])
-      %td= get_disp_type_name(f[:object])
-      %td= get_disp_update_time(f[:object])
-      %td= file_view_tag(f[:object])
-      %td= file_edit_tag(f[:object])
-      %td= destroy_share_link_tag(f[:object])
+      %td= file_link_tag(i[:object])
+      %td= get_disp_type_name(i[:object])
+      %td= get_disp_update_time(i[:object])
+      %td= file_view_tag(i[:object])
+      %td= file_edit_tag(i[:object])
+      %td= destroy_share_link_tag(i[:object])

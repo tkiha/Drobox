@@ -11,7 +11,7 @@ class Folder < ActiveRecord::Base
 
   scope :root_folder, -> { find_by(parent_folder_id: nil) }
   scope :get_folder_or_root, ->(folder_id){
-    folder_id.blank? ? root_folder : find(folder_id)
+    folder_id.blank? ? root_folder : find_by(id: folder_id)
   }
 
   validate :my_parent_folder

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   match 'fromsharelist' => 'shares#fromshares', :as => 'list_from_share', :via => :get
   match 'tosharelist' => 'shares#toshares', :as => 'list_to_share', :via => :get
 
+  match 'tosharefolder/:id' => 'toshare_folders#index', :as => 'toshare_list_folder', :via => :get
+
   # idを省略可能とした。省略時はroot扱いとなる
   match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
   match 'search(/:id)' => 'folders#search', :as => 'search_folder', :defaults => {id: nil}, :via => :get
@@ -34,7 +36,6 @@ Rails.application.routes.draw do
         delete :destroyshares, to: 'fileshares#destroy'
       end
     end
-    resources :fileshares, only: [:new, :update, :destroy]
 
     resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show] do
       member do

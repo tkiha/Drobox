@@ -9,6 +9,16 @@ module FoldersHelper
     end
   end
 
+  def toshare_file_link_tag(target_object)
+    if target_object.kind_of?(Folder)
+      return link_to target_object.name, toshare_list_folder_path(target_object)
+    end
+
+    if target_object.kind_of?(Upfile)
+     # return link_to target_object.name, toshare_folder_upfile_path(target_object.folder_id, target_object)
+    end
+  end
+
   def file_view_tag(target_object)
     if target_object.kind_of?(Folder)
       return link_to '詳細', folder_folder_path(target_object.parent_folder_id, target_object)
@@ -116,16 +126,23 @@ module FoldersHelper
     return orderby_item,orderby_value.to_i
   end
 
-  def get_list_toshare_source(orderby)
-    itemlist = []
-    add_itemlist_toshare_folders(itemlist)
-    add_itemlist_toshare_upfiles(itemlist)
-    itemlist_orderby(itemlist, orderby)
-    itemlist.uniq!
-    itemlist
+  def get_toshare_list_folder_source(folder, orderby)
+    items = []
+    add_items_toshare_folder_upfiles(items, folder)
+    items_orderby(items, orderby)
+    items
   end
 
-  def add_itemlist_toshare_folders(itemlist)
+  def get_toshare_items(orderby)
+    items = []
+    add_items_toshare_folders(items)
+    add_items_toshare_upfiles(items)
+    items_orderby(items, orderby)
+    items.uniq!
+    items
+  end
+
+  def add_items_toshare_folders(items)
     # 共有されたフォルダを抽出
     current_user.to_share_folders.each do |f|
       rec = {
@@ -135,11 +152,11 @@ module FoldersHelper
         Const.orderby.field.owner => get_disp_own_user_name(f),
         object: f
       }
-      itemlist << rec
+      items << rec
     end
   end
 
-  def add_itemlist_toshare_upfiles(itemlist)
+  def add_items_toshare_upfiles(items)
     # 共有されたファイルを抽出
     current_user.to_share_files.each do |f|
       rec = {
@@ -149,20 +166,20 @@ module FoldersHelper
         Const.orderby.field.owner => get_disp_own_user_name(f),
         object: f
       }
-      itemlist << rec
+      items << rec
     end
   end
 
-  def get_list_fromshare_source(orderby)
-    itemlist = []
-    add_itemlist_fromshare_folders(itemlist)
-    add_itemlist_fromshare_upfiles(itemlist)
-    itemlist_orderby(itemlist, orderby)
-    itemlist.uniq!
-    itemlist
+  def get_fromshare_items(orderby)
+    items = []
+    add_items_fromshare_folders(items)
+    add_items_fromshare_upfiles(items)
+    items_orderby(items, orderby)
+    items.uniq!
+    items
   end
 
-  def add_itemlist_fromshare_folders(itemlist)
+  def add_items_fromshare_folders(items)
     # 共有したフォルダを抽出
     current_user.from_share_folders.each do |f|
       rec = {
@@ -171,11 +188,11 @@ module FoldersHelper
         Const.orderby.field.time => get_disp_update_time(f),
         object: f
       }
-      itemlist << rec
+      items << rec
     end
   end
 
-  def add_itemlist_fromshare_upfiles(itemlist)
+  def add_items_fromshare_upfiles(items)
     # 共有したファイルを抽出
     current_user.from_share_files.each do |f|
       rec = {
@@ -184,19 +201,19 @@ module FoldersHelper
         Const.orderby.field.time => get_disp_update_time(f),
         object: f
       }
-      itemlist << rec
+      items << rec
     end
   end
 
-  def get_list_folder_source(folder, orderby)
-    itemlist = []
-    add_itemlist_sub_folders(itemlist, folder)
-    add_itemlist_upfiles(itemlist, folder)
-    itemlist_orderby(itemlist, orderby)
-    itemlist
+  def get_folder_items(folder, orderby)
+    items = []
+    add_items_sub_folders(items, folder)
+    add_items_upfiles(items, folder)
+    items_orderby(items, orderby)
+    items
   end
 
-  def add_itemlist_sub_folders(itemlist, folder)
+  def add_items_sub_folders(items, folder)
     # サブフォルダを抽出
     folder.sub_folders.each do |f|
       rec = {
@@ -205,11 +222,11 @@ module FoldersHelper
         Const.orderby.field.time => get_disp_update_time(f),
         object: f
       }
-      itemlist << rec
+      items << rec
     end
   end
 
-  def add_itemlist_upfiles(itemlist, folder)
+  def add_items_upfiles(items, folder)
     # フォルダ内のファイルを抽出
     folder.upfiles.each do |f|
       rec = {
@@ -218,15 +235,15 @@ module FoldersHelper
         Const.orderby.field.time => get_disp_update_time(f),
         object: f
       }
-      itemlist << rec
+      items << rec
     end
   end
 
-  def itemlist_orderby(itemlist, orderby)
+  def items_orderby(items, orderby)
     orderby_item, orderby_value = get_orderby_params(orderby)
     if orderby_value != Const.orderby.none
-      itemlist.sort_by! { |item| item[orderby_item] }
-      itemlist.reverse! if orderby_value == Const.orderby.desc
+      items.sort_by! { |item| item[orderby_item] }
+      items.reverse! if orderby_value == Const.orderby.desc
     end
   end
 end

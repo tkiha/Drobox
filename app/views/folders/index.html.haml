@@ -14,16 +14,16 @@
     %th= filelist_header_tag(Const.orderby.field.type, @folder, @orderby)
     %th= filelist_header_tag(Const.orderby.field.time, @folder, @orderby)
 
-  - list_folder = get_list_folder_source(@folder, @orderby)
-  - list_folder.each do |f|
+  - folder_items = get_folder_items(@folder, @orderby)
+  - folder_items.each do |i|
     %tr
-      %td= file_link_tag(f[:object])
-      %td= get_disp_type_name(f[:object])
-      %td= get_disp_update_time(f[:object])
-      %td= file_view_tag(f[:object])
-      %td= file_edit_tag(f[:object])
-      %td= share_link_tag(f[:object])
-      %td= link_to '削除', [@folder, f[:object]], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
+      %td= file_link_tag(i[:object])
+      %td= get_disp_type_name(i[:object])
+      %td= get_disp_update_time(i[:object])
+      %td= file_view_tag(i[:object])
+      %td= file_edit_tag(i[:object])
+      %td= share_link_tag(i[:object])
+      %td= link_to '削除', [@folder, i[:object]], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 
 %hr
 
