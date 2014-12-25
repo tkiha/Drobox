@@ -1,4 +1,4 @@
-module FolderlistHelper
+module ItemsHelper
   def item_link_tag(target_object)
     if target_object.kind_of?(Folder)
       return link_to target_object.name, items_path(target_object)
