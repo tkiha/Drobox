@@ -10,18 +10,18 @@
         %li= msg
 %table
   %tr
-    %th= filelist_header_tag(Const.orderby.field.file, @folder, @orderby)
-    %th= filelist_header_tag(Const.orderby.field.type, @folder, @orderby)
-    %th= filelist_header_tag(Const.orderby.field.time, @folder, @orderby)
+    %th= items_header_tag(Const.orderby.field.file, @folder, @orderby)
+    %th= items_header_tag(Const.orderby.field.type, @folder, @orderby)
+    %th= items_header_tag(Const.orderby.field.time, @folder, @orderby)
 
   - folder_items = get_folder_items(@folder, @orderby)
   - folder_items.each do |i|
     %tr
-      %td= file_link_tag(i[:object])
+      %td= item_link_tag(i[:object])
       %td= get_disp_type_name(i[:object])
       %td= get_disp_update_time(i[:object])
-      %td= file_view_tag(i[:object])
-      %td= file_edit_tag(i[:object])
+      %td= item_view_tag(i[:object])
+      %td= item_edit_tag(i[:object])
       %td= share_link_tag(i[:object])
       %td= link_to '削除', [@folder, i[:object]], :method => :delete, :data => { :confirm => '削除してもよろしいですか？' }
 

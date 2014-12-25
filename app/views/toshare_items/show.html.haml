@@ -1,0 +1,19 @@
+%h1 共有された一覧
+
+%hr
+
+%table
+  %tr
+    %th= shareitems_header_tag(Const.orderby.field.file,  @orderby, toshare_items_path)
+    %th= shareitems_header_tag(Const.orderby.field.type,  @orderby, toshare_items_path)
+    %th= shareitems_header_tag(Const.orderby.field.time,  @orderby, toshare_items_path)
+    %th= shareitems_header_tag(Const.orderby.field.owner,  @orderby, toshare_items_path)
+
+  - toshare_items = get_toshare_items(@orderby)
+  - toshare_items.each do |i|
+    %tr
+      %td= toshare_item_link_tag(i[:object])
+      %td= get_disp_type_name(i[:object])
+      %td= get_disp_update_time(i[:object])
+      %td= get_disp_own_user_name(i[:object])
+      %td= toshare_item_view_tag(i[:object])

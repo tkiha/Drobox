@@ -61,7 +61,7 @@ module ApplicationHelper
     folder.all_parents(parents)
     content_tag(:folders) do
       parents.each_with_index.reverse_each do |f,index|
-        concat link_to(f.name,list_folder_path(f))
+        concat link_to(f.name,items_path(f))
         concat '  ->  ' if index!=0
       end
     end

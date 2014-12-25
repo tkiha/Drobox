@@ -9,11 +9,11 @@
     - if user_signed_in?
       = link_to "ログアウト", destroy_user_session_path, :method => :delete
       \|
-      = link_to "rootへ", list_folder_path
+      = link_to "rootへ", items_path
       \|
-      = link_to "共有した一覧へ", list_from_share_path
+      = link_to "共有した一覧へ", fromshare_items_path
       \|
-      = link_to "共有された一覧へ", list_to_share_path
+      = link_to "共有された一覧へ", toshare_items_path
       %hr
 
     %p{class: "notice"}

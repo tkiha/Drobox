@@ -1,7 +1,7 @@
-module FoldersHelper
-  def file_link_tag(target_object)
+module FolderlistHelper
+  def item_link_tag(target_object)
     if target_object.kind_of?(Folder)
-      return link_to target_object.name, list_folder_path(target_object)
+      return link_to target_object.name, items_path(target_object)
     end
 
     if target_object.kind_of?(Upfile)
@@ -9,17 +9,17 @@ module FoldersHelper
     end
   end
 
-  def toshare_file_link_tag(target_object)
+  def toshare_item_link_tag(target_object)
     if target_object.kind_of?(Folder)
-      return link_to target_object.name, toshare_list_folder_path(target_object)
+      return link_to target_object.name, toshare_items_path(target_object)
     end
 
     if target_object.kind_of?(Upfile)
-     # return link_to target_object.name, toshare_folder_upfile_path(target_object.folder_id, target_object)
+      # return link_to target_object.name, toshare_folder_upfile_path(target_object.folder_id, target_object)
     end
   end
 
-  def file_view_tag(target_object)
+  def item_view_tag(target_object)
     if target_object.kind_of?(Folder)
       return link_to '詳細', folder_folder_path(target_object.parent_folder_id, target_object)
     end
@@ -29,7 +29,17 @@ module FoldersHelper
     end
   end
 
-  def file_edit_tag(target_object)
+  def toshare_item_view_tag(target_object)
+    if target_object.kind_of?(Folder)
+      return link_to '詳細', folder_folder_path(target_object.parent_folder_id, target_object)
+    end
+
+    if target_object.kind_of?(Upfile)
+      return link_to '詳細', folder_upfile_path(target_object.folder_id, target_object)
+    end
+  end
+
+  def item_edit_tag(target_object)
     if target_object.kind_of?(Folder)
       return link_to '編集', edit_folder_folder_path(target_object.parent_folder_id, target_object)
     end
@@ -59,30 +69,30 @@ module FoldersHelper
     end
   end
 
-  def sharelist_header_tag(field, orderby, link_path)
-    field_name = get_list_header_title(field)
+  def shareitems_header_tag(field, orderby, link_path)
+    field_name = get_item_header_title(field)
     now_orderby, next_orderby, arrow =
-      get_list_header_orderby(field, orderby)
+    get_item_header_orderby(field, orderby)
 
     field_name << arrow
 
     link_to field_name, "#{link_path}?f=#{field}&o=#{next_orderby}"
   end
 
-  def filelist_header_tag(field, folder, orderby)
-    field_name = get_list_header_title(field)
+  def items_header_tag(field, folder, orderby)
+    field_name = get_item_header_title(field)
     now_orderby, next_orderby, arrow =
-      get_list_header_orderby(field, orderby)
+      get_item_header_orderby(field, orderby)
 
     field_name << arrow
 
-    link_to field_name, list_folder_path(folder,
+    link_to field_name, items_path(folder,
       f: field,
       o: next_orderby,
     )
   end
 
-  def get_list_header_title(field)
+  def get_item_header_title(field)
     case field
       when Const.orderby.field.file
         'ファイル'
@@ -95,7 +105,7 @@ module FoldersHelper
     end
   end
 
-  def get_list_header_orderby(field, orderby)
+  def get_item_header_orderby(field, orderby)
     orderby_item, orderby_value = get_orderby_params(orderby)
     now_orderby = orderby_value
     next_orderby = Const.orderby.asce
@@ -126,9 +136,9 @@ module FoldersHelper
     return orderby_item,orderby_value.to_i
   end
 
-  def get_toshare_list_folder_source(folder, orderby)
+  def get_toshare_folder_items(folder, orderby)
     items = []
-    add_items_toshare_folder_upfiles(items, folder)
+    add_items_upfiles(items, folder)
     items_orderby(items, orderby)
     items
   end

@@ -22,11 +22,11 @@
 
     - @upfiles.each do |upfile|
       %tr
-        %td= file_link_tag(upfile.folder)
-        %td= file_link_tag(upfile)
+        %td= item_link_tag(upfile.folder)
+        %td= item_link_tag(upfile)
         %td= get_disp_type_name(upfile)
         %td= get_disp_update_time(upfile)
 
 %hr
 
-= link_to '一覧へ', list_folder_path(@folder)
+= link_to '一覧へ', items_path(@folder)

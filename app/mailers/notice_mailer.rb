@@ -5,7 +5,7 @@ class NoticeMailer < ActionMailer::Base
     @item = share_item
     @from_user = from_user
     @to_user = to_user
-    @url = list_to_share_url
+    @url = toshare_items_url
 
     mail ({ to: to_user.email, subject: 'Droboxからのお知らせ' })
 

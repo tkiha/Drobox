@@ -5,20 +5,15 @@ Rails.application.routes.draw do
   devise_scope :user do
     authenticated :user do
       # 認証済みユーザーの場合はファイル一覧へ
-      root :to => 'folders#index'
+      root :to => 'folders#show'
     end
     unauthenticated :user do
       root :to => 'devise/registrations#new', as: :unauthenticated_root
     end
   end
 
-  match 'fromsharelist' => 'shares#fromshares', :as => 'list_from_share', :via => :get
-  match 'tosharelist' => 'shares#toshares', :as => 'list_to_share', :via => :get
-
-  match 'tosharefolder/:id' => 'toshare_folders#index', :as => 'toshare_list_folder', :via => :get
-
   # idを省略可能とした。省略時はroot扱いとなる
-  match 'list(/:id)' => 'folders#index', :as => 'list_folder', :defaults => {id: nil}, :via => :get
+  match 'items(/:id)' => 'folders#show', :as => 'items', :defaults => {id: nil}, :via => :get
   match 'search(/:id)' => 'folders#search', :as => 'search_folder', :defaults => {id: nil}, :via => :get
 
   # folder_idはどのフォルダ一覧へ戻るかを示すためのキー。省略可能。省略時はrootへ戻る事になる
@@ -27,7 +22,7 @@ Rails.application.routes.draw do
 
   # URLにフォルダIDが欲しいので folders でくくっている。actionは不要なのでdummyとした
   resources :folders, only: [:dummy] do
-    resources :upfiles do
+    resources :upfiles, only: [:edit, :create, :new, :destroy, :update, :show] do
       member do
         get :download
         post :move, :copy
@@ -46,4 +41,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resource :fromshare_items, only: [:show]
+  resource :toshare_items, only: [:show]
+  resources :toshare_folders, only: [:show]
 end
