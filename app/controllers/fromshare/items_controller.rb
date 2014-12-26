@@ -1,4 +1,4 @@
-class ToshareItemsController < ApplicationController
+class Fromshare::ItemsController < ApplicationController
   include Items_orderby
   before_filter :authenticate_user!
   before_action :set_orderby, only: [:show]

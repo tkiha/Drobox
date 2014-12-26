@@ -22,6 +22,14 @@ class User < ActiveRecord::Base
   # ユーザーが共有されているフォルダ
   has_many :to_share_folders, through: :to_folder_shares, source: :folder
 
+  # 共有されているファイルと
+  # 共有されているフォルダ内にあるファイルをまとめたもの
+  def to_share_files_all
+    keys = Upfile.where('folder_id', self.to_share_folders.pluck(:id)).pluck(:id)
+    keys << self.to_share_files.pluck(:id)
+    Upfile.where('id', keys)
+  end
+
   private
   def generate_root_folder
     self.folders.build(name: 'root').save unless self.folders.root_folder.present?

@@ -29,6 +29,10 @@ Rails.application.routes.draw do
         get :newshares, to: 'fileshares#new'
         patch :updateshares, to: 'fileshares#update'
         delete :destroyshares, to: 'fileshares#destroy'
+        namespace 'toshare' do
+          get :show, to: 'upfiles#show'
+          get :download, to: 'upfiles#download'
+        end
       end
     end
 
@@ -38,11 +42,19 @@ Rails.application.routes.draw do
         get :newshares, to: 'foldershares#new'
         patch :updateshares, to: 'foldershares#update'
         delete :destroyshares, to: 'foldershares#destroy'
+        namespace 'toshare' do
+          get :show, to: 'subfolders#show'
+        end
       end
     end
   end
 
-  resource :fromshare_items, only: [:show]
-  resource :toshare_items, only: [:show]
-  resources :toshare_folders, only: [:show]
+  namespace 'fromshare' do
+    resource :items, only: [:show]
+  end
+
+  namespace 'toshare' do
+    resource :items, only: [:show]
+    resources :folder_items, only: [:show]
+  end
 end

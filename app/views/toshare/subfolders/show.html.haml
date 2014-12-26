@@ -1,0 +1,13 @@
+%p
+  %strong フォルダ名:
+  = @folder.name
+%p
+  %strong 更新日時:
+  = get_disp_update_time(@folder)
+%p
+  %strong 所有者:
+  = @folder.own_user.email
+
+%hr
+= link_to '共有された一覧へ', toshare_items_path
+

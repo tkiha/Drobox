@@ -1,71 +1,71 @@
 module ItemsHelper
-  def item_link_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to target_object.name, items_path(target_object)
+  def item_link_tag(item)
+    if item.kind_of?(Folder)
+      return link_to item.name, items_path(item)
     end
 
-    if target_object.kind_of?(Upfile)
-      return link_to target_object.name, folder_upfile_path(target_object.folder_id, target_object)
-    end
-  end
-
-  def toshare_item_link_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to target_object.name, toshare_items_path(target_object)
-    end
-
-    if target_object.kind_of?(Upfile)
-      # return link_to target_object.name, toshare_folder_upfile_path(target_object.folder_id, target_object)
+    if item.kind_of?(Upfile)
+      return link_to item.name, folder_upfile_path(item.folder_id, item)
     end
   end
 
-  def item_view_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to '詳細', folder_folder_path(target_object.parent_folder_id, target_object)
+  def toshare_item_link_tag(item)
+    if item.kind_of?(Folder)
+      return link_to item.name, toshare_folder_item_path(item)
     end
 
-    if target_object.kind_of?(Upfile)
-      return link_to '詳細', folder_upfile_path(target_object.folder_id, target_object)
-    end
-  end
-
-  def toshare_item_view_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to '詳細', folder_folder_path(target_object.parent_folder_id, target_object)
-    end
-
-    if target_object.kind_of?(Upfile)
-      return link_to '詳細', folder_upfile_path(target_object.folder_id, target_object)
+    if item.kind_of?(Upfile)
+      return link_to item.name, folder_toshare_upfile_path(item.folder_id, item)
     end
   end
 
-  def item_edit_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to '編集', edit_folder_folder_path(target_object.parent_folder_id, target_object)
+  def item_view_tag(item)
+    if item.kind_of?(Folder)
+      return link_to '詳細', folder_folder_path(item.parent_folder_id, item)
     end
 
-    if target_object.kind_of?(Upfile)
-      return link_to '編集', edit_folder_upfile_path(target_object.folder_id, target_object)
-    end
-  end
-
-  def share_link_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to '共有', newshares_folder_folder_path(target_object.parent_folder_id, target_object)
-    end
-
-    if target_object.kind_of?(Upfile)
-      return link_to '共有', newshares_folder_upfile_path(target_object.folder_id, target_object)
+    if item.kind_of?(Upfile)
+      return link_to '詳細', folder_upfile_path(item.folder_id, item)
     end
   end
 
-  def destroy_share_link_tag(target_object)
-    if target_object.kind_of?(Folder)
-      return link_to '共有解除',destroyshares_folder_folder_path(target_object.parent_folder_id, target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+  def toshare_item_view_tag(item)
+    if item.kind_of?(Folder)
+      return link_to '詳細', folder_toshare_folder_path(item.parent_folder, item)
     end
 
-    if target_object.kind_of?(Upfile)
-      return link_to '共有解除',destroyshares_folder_upfile_path(target_object.folder_id, target_object) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+    if item.kind_of?(Upfile)
+      return link_to '詳細', folder_toshare_upfile_path(item.folder_id, item)
+    end
+  end
+
+  def item_edit_tag(item)
+    if item.kind_of?(Folder)
+      return link_to '編集', edit_folder_folder_path(item.parent_folder_id, item)
+    end
+
+    if item.kind_of?(Upfile)
+      return link_to '編集', edit_folder_upfile_path(item.folder_id, item)
+    end
+  end
+
+  def share_link_tag(item)
+    if item.kind_of?(Folder)
+      return link_to '共有', newshares_folder_folder_path(item.parent_folder_id, item)
+    end
+
+    if item.kind_of?(Upfile)
+      return link_to '共有', newshares_folder_upfile_path(item.folder_id, item)
+    end
+  end
+
+  def destroy_share_link_tag(item)
+    if item.kind_of?(Folder)
+      return link_to '共有解除',destroyshares_folder_folder_path(item.parent_folder_id, item) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+    end
+
+    if item.kind_of?(Upfile)
+      return link_to '共有解除',destroyshares_folder_upfile_path(item.folder_id, item) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
     end
   end
 
