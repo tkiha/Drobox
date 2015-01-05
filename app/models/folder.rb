@@ -6,7 +6,7 @@ class Folder < ActiveRecord::Base
   has_many :from_share_users, through: :folder_shares, source: :from_user
   has_many :to_share_users, through: :folder_shares, source: :to_user
 
-  has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id, dependent: :destroy
+  has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id , dependent: :destroy
   belongs_to :parent_folder, class_name: :Folder, foreign_key: :parent_folder_id
 
   scope :root_folder, -> { find_by(parent_folder_id: nil) }
@@ -44,9 +44,43 @@ class Folder < ActiveRecord::Base
     parent.all_parents(parents) if parent.present?
   end
 
-  # フォルダをまるっとコピーする
+  # フォルダを中身を含めて移動する
+  def deepmove(moveto_folder_id)
+    if self.id.to_s == moveto_folder_id
+      errors.add(:parent_folder_id, "同じフォルダへは移動できません。")
+      return false
+    end
+    subfolders = self.get_subfolders([])
+    self.transaction do
+      if subfolders.include?(moveto_folder_id.to_i)
+        # サブフォルダ内のどこかに移動する場合は、親子関係が崩れるので
+        # 崩れないようにつなぎ直す
+        self.sub_folders.each do |sub_folder|
+          sub_folder.parent_folder_id = self.parent_folder_id
+          sub_folder.save!
+        end
+      end
+      self.parent_folder_id = moveto_folder_id
+      self.save!
+    end
+      true
+    rescue => e
+      errors.add(:parent_folder_id, "移動できませんでした。#{e.message}")
+      false
+  end
+    
+  def get_subfolders(subfolders)
+    if self.sub_folders.present?
+      self.sub_folders.each do |sub_folder|
+        subfolders << sub_folder.id
+        sub_folder.get_subfolders(subfolders)
+      end
+    end
+    subfolders
+  end
+
+  # フォルダを中身を含めてコピーする
   def deepcopy(copyto_folder_id)
-    p "***#{self.id} ***#{copyto_folder_id} "
     if self.id.to_s == copyto_folder_id
       errors.add(:parent_folder_id, "同じフォルダへはコピーできません。")
       return false

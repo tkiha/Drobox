@@ -29,7 +29,7 @@ class SubfoldersController < ApplicationController
 
   def move
     respond_to do |format|
-      if @folder.update({parent_folder_id: folder_movecopy_params})
+      if @folder.deepmove(folder_movecopy_params)
         format.html { redirect_to items_path(folder_movecopy_params), notice: '移動しました' }
       else
         format.html { redirect_to items_path(@parent_folder.id) , notice: @folder.errors.messages[:parent_folder_id].join }
