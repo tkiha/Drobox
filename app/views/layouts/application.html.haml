@@ -7,8 +7,8 @@
     = csrf_meta_tags
   %body
     - if user_signed_in?
-      #{current_user.email}様&nbsp;
-
+      = link_to "#{current_user.email}様", edit_user_registration_path
+      \|
       = link_to "ログアウト", destroy_user_session_path, :method => :delete
       \|
       = link_to "rootへ", items_path
