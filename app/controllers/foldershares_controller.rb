@@ -10,6 +10,8 @@ class FoldersharesController < ApplicationController
     respond_to do |format|
       if @folder.update(update_params)
         sendmail
+        Event.create(event: "フォルダ#{@folder.name}を共有しました",
+                 user_id: current_user.id)
         format.html { redirect_to folder_folder_path(@folder.parent_folder_id, @folder), notice: "#{@folder.name}を共有しました" }
       else
         format.html { render :new }
@@ -19,6 +21,8 @@ class FoldersharesController < ApplicationController
 
   def destroy
     @folder.folder_shares.destroy_all
+    Event.create(event: "フォルダ#{@folder.name}の共有を解除しました",
+             user_id: current_user.id)
     redirect_to fromshare_items_path, notice: '共有解除しました'
   end
 

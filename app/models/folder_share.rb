@@ -11,5 +11,6 @@ class FolderShare < ActiveRecord::Base
       message: "同じ共有相手は指定できません。",
       scope: [:from_user_id, :to_user_id]
     }
+
 end
 

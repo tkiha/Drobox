@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216084832) do
+ActiveRecord::Schema.define(version: 20150106012810) do
+
+  create_table "events", force: true do |t|
+    t.text     "event"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "file_share_tos", force: true do |t|
     t.integer  "file_share_id"

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
          :validatable, :confirmable
   after_save :generate_root_folder
 
+  has_many :events, dependent: :destroy
   has_many :upfiles, dependent: :destroy
   has_many :from_upfile_shares, class_name: :FileShare, foreign_key: :from_user_id
   has_many :to_upfile_shares, class_name: :FileShare, foreign_key: :to_user_id

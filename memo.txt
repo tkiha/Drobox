@@ -4,6 +4,7 @@ rails g model folder name:string user_id:integer parent_folder_id:integer user_i
 rails g model upfile name:string file_binary:binary folder_id:integer user_id:integer
 rails g model folder_share name:string folder_id:integer from_user_id:integer to_user_id:integer
 rails g model file_share name:string upfile_id:integer from_user_id:integer to_user_id:integer
+rails g model event event:text user_id:integer
 
 rake haml:replace_erbs
 

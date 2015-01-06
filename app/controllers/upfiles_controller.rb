@@ -16,7 +16,7 @@ class UpfilesController < ApplicationController
 
   def move
     respond_to do |format|
-      if @upfile.update({ folder_id: upfile_movecopy_params })
+      if @upfile.move(upfile_movecopy_params)
         format.html { redirect_to items_path(upfile_movecopy_params), notice: '移動しました' }
       else
         format.html { redirect_to items_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
@@ -25,10 +25,10 @@ class UpfilesController < ApplicationController
   end
 
   def copy
-    @upfile = @upfile.dup
-    @upfile.folder_id = upfile_movecopy_params
+    #@upfile = @upfile.dup
+    #@upfile.folder_id = upfile_movecopy_params
     respond_to do |format|
-      if @upfile.save
+      if @upfile.copy(upfile_movecopy_params)
         format.html { redirect_to items_path(upfile_movecopy_params), notice: 'コピーしました' }
       else
         format.html { redirect_to items_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
