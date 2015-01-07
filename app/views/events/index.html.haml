@@ -1,0 +1,15 @@
+%h1 イベント一覧
+
+%hr
+
+%table
+  %tr
+    %th イベント
+    %th 日時
+
+  - @events.each do |event|
+    %tr
+      %td= event.event
+      %td= get_disp_update_time(event)
+%hr
+= paginate @events, :window => 2

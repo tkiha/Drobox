@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   match 'find(/:folder_id)' => 'find#new', :as => 'find', :defaults => {folder_id: nil}, :via => :get
   match 'findresult(/:folder_id)' => 'find#show', :as => 'find_result', :defaults => {folder_id: nil}, :via => :post
 
+
   # URLにフォルダIDが欲しいので folders でくくっている。actionは不要なのでdummyとした
   resources :folders, only: [:dummy] do
     resources :upfiles, only: [:edit, :create, :new, :destroy, :update, :show] do
@@ -57,4 +58,6 @@ Rails.application.routes.draw do
     resource :items, only: [:show]
     resources :folder_items, only: [:show]
   end
+
+  resources :events, only: [:index]
 end

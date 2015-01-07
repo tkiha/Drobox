@@ -44,6 +44,7 @@ gem 'jquery-ui-rails'
 gem 'rails-i18n'
 gem 'settingslogic'
 gem 'nested_form'
+gem 'kaminari'
 
 group :development, :test do
     gem 'hirb'

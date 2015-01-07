@@ -32,9 +32,9 @@ class Folder < ActiveRecord::Base
                  user_id: self.user_id)
   }
 
-  def disp_update_time
-    self.updated_at
-  end
+  # def disp_update_time
+  #   return self.updated_at.in_time_zone('Tokyo')
+  # end
 
   def get_family_folders
     families = {}

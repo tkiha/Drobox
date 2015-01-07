@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def get_disp_update_time(target_object)
-    target_object.updated_at.to_s(:db)
+    target_object.updated_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S")
   end
 
   def get_disp_own_user_name(target_object)
