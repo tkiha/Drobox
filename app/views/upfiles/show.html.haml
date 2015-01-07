@@ -16,7 +16,7 @@
 
 %hr
 
-= link_to 'ダウンロード', download_folder_upfile_path(@folder, @upfile)
+= link_to 'ダウンロード', download_folder_upfile_path(@folder, @upfile), 'data-no-turbolink' => true 
 \|
 = link_to '編集', edit_folder_upfile_path(@folder, @upfile)
 \|

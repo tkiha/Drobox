@@ -25,8 +25,6 @@ class UpfilesController < ApplicationController
   end
 
   def copy
-    #@upfile = @upfile.dup
-    #@upfile.folder_id = upfile_movecopy_params
     respond_to do |format|
       if @upfile.copy(upfile_movecopy_params)
         format.html { redirect_to items_path(upfile_movecopy_params), notice: 'コピーしました' }
@@ -38,6 +36,8 @@ class UpfilesController < ApplicationController
 
   def download
     send_data(@upfile.file_binary, filename: @upfile.name)
+    Event.create(event: "ファイル#{@upfile.name}をダウンロードしました",
+                 user_id: current_user.id)
   end
 
   def create

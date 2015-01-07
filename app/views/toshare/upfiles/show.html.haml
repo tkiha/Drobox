@@ -13,7 +13,8 @@
 
 %hr
 
-= link_to 'ダウンロード', download_folder_toshare_upfile_path(@upfile.folder_id, @upfile)
+= link_to 'ダウンロード', download_folder_toshare_upfile_path(@upfile.folder_id, @upfile), 'data-no-turbolink' => true
+
 \|
 = link_to '共有された一覧へ', toshare_items_path
 
