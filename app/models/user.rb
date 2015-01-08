@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         :validatable, :confirmable
+         :validatable #herokuでメール認証やりづらいので取った, :confirmable
   after_save :generate_root_folder
 
   has_many :events, dependent: :destroy
@@ -26,9 +26,13 @@ class User < ActiveRecord::Base
   # 共有されているファイルと
   # 共有されているフォルダ内にあるファイルをまとめたもの
   def to_share_files_all
-    keys = Upfile.where('folder_id', self.to_share_folders.pluck(:id)).pluck(:id)
-    keys << self.to_share_files.pluck(:id)
-    Upfile.where('id', keys)
+    keys = Upfile.where(folder_id: self.to_share_folders.pluck(:id)).pluck(:id)
+    p '====='
+    p keys
+    keys << self.to_share_files.pluck(:id).compact!
+    keys.compact!
+    p keys
+    Upfile.where(id: keys)
   end
 
   private

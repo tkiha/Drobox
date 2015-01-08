@@ -49,7 +49,6 @@ class UpfilesController < ApplicationController
     end
     rec_values[:user_id] = current_user.id
 
-    p "rec_values -> #{rec_values.inspect}"
     @upfile = @upfiles.build(rec_values)
     respond_to do |format|
       if @upfile.save
