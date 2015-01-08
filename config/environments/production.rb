@@ -79,5 +79,5 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :test
 # Default Mailer Host
-  Rails.application.routes.default_url_options[:host] = 'domain.com'
+  Rails.application.routes.default_url_options[:host] = 'evening-headland-7550.herokuapp.comdomain.com'
 end
