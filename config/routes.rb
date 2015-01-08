@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'fromshare' do
-    resource :items, only: [:show]
+    resource :items #, only: [:show]
   end
 
   namespace 'toshare' do
