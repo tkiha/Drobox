@@ -12,5 +12,8 @@ class FolderShare < ActiveRecord::Base
       scope: [:from_user_id, :to_user_id]
     }
 
+  before_save :set_current_user
+  def set_current_user
+    self.from_user = self.folder.current_user
+  end
 end
-

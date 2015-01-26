@@ -134,6 +134,7 @@ class Folder < ActiveRecord::Base
 
   end
 
+  attr_accessor :current_user
 
   private
     def my_parent_folder
