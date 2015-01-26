@@ -36,10 +36,10 @@ class Upfile < ActiveRecord::Base
       Event.create!(event: "ファイル#{self.name}を移動しました",
                    user_id: self.user_id)
     end
-      true
-    rescue => e
-      errors.add(:folder_id, "移動できませんでした。#{e.message}")
-      false
+    true
+  rescue => e
+    errors.add(:folder_id, "移動できませんでした。#{e.message}")
+    false
   end
 
   def copy(copyto_folder_id)
@@ -50,10 +50,10 @@ class Upfile < ActiveRecord::Base
       Event.create!(event: "ファイル#{self.name}をコピーしました",
                    user_id: self.user_id)
     end
-      true
-    rescue => e
-      errors.add(:folder_id, "コピーできませんでした。#{e.message}")
-      false
+    true
+  rescue => e
+    errors.add(:folder_id, "コピーできませんでした。#{e.message}")
+    false
   end
 
   def deliver_shared_email
