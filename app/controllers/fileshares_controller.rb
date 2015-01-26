@@ -3,7 +3,6 @@ class FilesharesController < ApplicationController
   before_action :set_upfile
 
   def new
-    @upfile.file_shares.build if @upfile.file_shares.blank?
   end
 
   def update
