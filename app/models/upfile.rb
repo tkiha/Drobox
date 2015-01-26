@@ -56,6 +56,12 @@ class Upfile < ActiveRecord::Base
       false
   end
 
+  def deliver_shared_email
+    self.file_shares.each do |item|
+      NoticeMailer.sendmail_share(@upfile, item.to_user).deliver
+    end
+  end
+
   private
     def my_folder
       errors.add(:folder_id, '不正なフォルダです') unless User.find(self.user_id).folders.pluck(:id).include?(self.folder_id)
