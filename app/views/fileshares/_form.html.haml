@@ -1,3 +1,4 @@
+- @upfile.file_shares.build if @upfile.file_shares.blank?
 = nested_form_for(@upfile, :url => url_for(:controller => 'fileshares', :action => 'update') ) do |f|
   - if @upfile.errors.any?
     #error_explanation

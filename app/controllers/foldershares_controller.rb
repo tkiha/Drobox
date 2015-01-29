@@ -8,6 +8,7 @@ class FoldersharesController < ApplicationController
 
   def update
     respond_to do |format|
+      @folder.current_user = current_user
       if @folder.update(update_params)
         sendmail
         Event.create(event: "フォルダ#{@folder.name}を共有しました",
@@ -32,7 +33,8 @@ class FoldersharesController < ApplicationController
     end
 
     def update_params
-      params[:folder].try("[]",:folder_shares_attributes).try(:each) do |item|
+      # 親のオブジェクトに渡してあげることで、このオブジェクトに渡す
+      params[:folder].try("[]", :folder_shares_attributes).try(:each) do |item|
         item.last[:from_user_id] = current_user.id
       end
       params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])

@@ -20,24 +20,10 @@ ActiveRecord::Schema.define(version: 20150106012810) do
     t.datetime "updated_at"
   end
 
-  create_table "file_share_tos", force: true do |t|
-    t.integer  "file_share_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "file_shares", force: true do |t|
     t.integer  "upfile_id"
     t.integer  "from_user_id"
     t.integer  "to_user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "folder_share_tos", force: true do |t|
-    t.integer  "folder_share_id"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
