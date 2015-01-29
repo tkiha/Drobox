@@ -26,12 +26,14 @@ class User < ActiveRecord::Base
   # 共有されているファイルと
   # 共有されているフォルダ内にあるファイルをまとめたもの
   def to_share_files_all
-    keys = Upfile.where(folder_id: self.to_share_folders.pluck(:id)).pluck(:id)
-    p '====='
-    p keys
-    keys << self.to_share_files.pluck(:id).compact!
+    keys_in_folder = Upfile.where(folder_id: self.to_share_folders.pluck(:id)).pluck(:id)
+    keys_files = self.to_share_files.pluck(:id)
+
+    # nilはcompact!メソッドの戻り値をnilにしないために付加している
+    keys = [nil] + keys_in_folder + keys_files
+    p "====>#{keys}"
     keys.compact!
-    p keys
+    p "====>#{keys}"
     Upfile.where(id: keys)
   end
 
