@@ -3,12 +3,15 @@ class FoldersharesController < ApplicationController
   before_action :set_folder
 
   def new
-    @folder.folder_shares.build if @folder.folder_shares.blank?
   end
 
   def update
     respond_to do |format|
-      @folder.current_user = current_user
+      # うまくいかなかった
+      # インスタンスが違うので子から親のattr_accessorを参照できなかった
+      # @folder.current_user = current_user
+      # p "---->@folder #{@folder}"
+
       if @folder.update(update_params)
         @folder.deliver_shared_email
         Event.create(event: "フォルダ#{@folder.name}を共有しました",

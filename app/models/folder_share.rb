@@ -12,8 +12,18 @@ class FolderShare < ActiveRecord::Base
       scope: [:from_user_id, :to_user_id]
     }
 
-  before_save :set_current_user
-  def set_current_user
-    self.from_user = self.folder.current_user
-  end
+  # before_validation :set_from_user_id
+  # def set_from_user_id
+  #   p "FolderShare before_valid --->#{self}"
+  #   p "--->#{self}"
+  #   p "--->#{self.folder}"
+  #   p "--->#{self.folder.current_user}"
+  #   self.from_user_id = 0
+  # end
+  # before_save :tes
+  # def tes
+  #   p "FolderShare before_save --->#{self}"
+  #   p "--->#{self.folder}"
+  #   p "--->#{self.folder.current_user}"
+  # end
 end

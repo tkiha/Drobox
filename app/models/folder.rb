@@ -32,6 +32,13 @@ class Folder < ActiveRecord::Base
                  user_id: self.user_id)
   }
 
+  # before_save :tes
+  # def tes
+  #   p "folder before_save --->#{self}"
+  #   p "--->#{self.current_user}"
+  # end
+
+
   # def disp_update_time
   #   return self.updated_at.in_time_zone('Tokyo')
   # end
@@ -115,7 +122,7 @@ class Folder < ActiveRecord::Base
       false
   end
 
-  def copyall(copyto_folder)
+  def cepyall(copyto_folder)
     self.upfiles.each do |upfile|
       copyfile = upfile.dup
       copyfile.folder_id = copyto_folder.id
@@ -140,7 +147,7 @@ class Folder < ActiveRecord::Base
     end
   end
 
-  attr_accessor :current_user
+  # attr_accessor :current_user
 
   private
     def my_parent_folder

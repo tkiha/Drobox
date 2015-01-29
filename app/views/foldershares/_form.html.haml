@@ -1,3 +1,4 @@
+- @folder.folder_shares.build if @folder.folder_shares.blank?
 = nested_form_for(@folder, :url => url_for(:controller => 'foldershares', :action => 'update')) do |f|
   - if @folder.errors.any?
     #error_explanation
