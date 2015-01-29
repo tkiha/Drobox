@@ -25,10 +25,7 @@ Rails.application.routes.draw do
       member do
         get :download
         post :move, :copy
-        # resources :fileshares 下3行をまとめたい
-        get :newshares, to: 'fileshares#new'
-        patch :updateshares, to: 'fileshares#update'
-        delete :destroyshares, to: 'fileshares#destroy'
+        resource :fileshares, only: [:new, :update, :destroy]
         namespace 'toshare' do
           get :show, to: 'upfiles#show'
           get :download, to: 'upfiles#download'

@@ -58,7 +58,7 @@ class Upfile < ActiveRecord::Base
 
   def deliver_shared_email
     self.file_shares.each do |item|
-      NoticeMailer.sendmail_share(@upfile, item.to_user).deliver
+      NoticeMailer.sendmail_share(self, item.to_user).deliver
     end
   end
 

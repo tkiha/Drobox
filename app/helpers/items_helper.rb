@@ -55,7 +55,7 @@ module ItemsHelper
     end
 
     if item.kind_of?(Upfile)
-      return link_to '共有', newshares_folder_upfile_path(item.folder_id, item)
+      return link_to '共有', new_folder_fileshares_path(item.folder_id, item)
     end
   end
 
@@ -65,7 +65,7 @@ module ItemsHelper
     end
 
     if item.kind_of?(Upfile)
-      return link_to '共有解除',destroyshares_folder_upfile_path(item.folder_id, item) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+      return link_to '共有解除', folder_fileshares_path(item.folder_id, item), :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
     end
   end
 
