@@ -51,7 +51,7 @@ module ItemsHelper
 
   def share_link_tag(item)
     if item.kind_of?(Folder)
-      return link_to '共有', newshares_folder_folder_path(item.parent_folder_id, item)
+      return link_to '共有', new_folder_foldershares_path(item.parent_folder_id, item)
     end
 
     if item.kind_of?(Upfile)
@@ -61,7 +61,7 @@ module ItemsHelper
 
   def destroy_share_link_tag(item)
     if item.kind_of?(Folder)
-      return link_to '共有解除',destroyshares_folder_folder_path(item.parent_folder_id, item) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
+      return link_to '共有解除',folder_foldershares_path(item.parent_folder_id, item) , :method => :delete, :data => { :confirm => '共有解除してもよろしいですか？' }
     end
 
     if item.kind_of?(Upfile)

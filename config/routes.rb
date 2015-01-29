@@ -37,9 +37,10 @@ Rails.application.routes.draw do
       member do
         post :move, :copy
         # resources :shares にしたい
-        get :newshares, to: 'foldershares#new'
-        patch :updateshares, to: 'foldershares#update'
-        delete :destroyshares, to: 'foldershares#destroy'
+        resource :foldershares, only: [:new, :update, :destroy]
+        #get :newshares, to: 'foldershares#new'
+        #patch :updateshares, to: 'foldershares#update'
+        #delete :destroyshares, to: 'foldershares#destroy'
         namespace 'toshare' do
           get :show, to: 'subfolders#show'
         end

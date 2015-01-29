@@ -10,7 +10,7 @@ class FoldersharesController < ApplicationController
     respond_to do |format|
       @folder.current_user = current_user
       if @folder.update(update_params)
-        sendmail
+        @folder.deliver_shared_email
         Event.create(event: "フォルダ#{@folder.name}を共有しました",
                  user_id: current_user.id)
         format.html { redirect_to folder_folder_path(@folder.parent_folder_id, @folder), notice: "#{@folder.name}を共有しました" }
@@ -24,7 +24,7 @@ class FoldersharesController < ApplicationController
     @folder.folder_shares.destroy_all
     Event.create(event: "フォルダ#{@folder.name}の共有を解除しました",
              user_id: current_user.id)
-    redirect_to fromshare_folder_path, notice: '共有解除しました'
+    redirect_to fromshare_items_path, notice: '共有解除しました'
   end
 
   private
@@ -40,10 +40,4 @@ class FoldersharesController < ApplicationController
       params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])
     end
 
-    def sendmail
-      @folder.folder_shares.each do |item|
-        NoticeMailer.sendmail_share(@folder, current_user, item.to_user).deliver
-        p "メール本文-->#{ActionMailer::Base.deliveries.last.body}"
-      end
-    end
 end

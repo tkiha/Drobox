@@ -134,6 +134,12 @@ class Folder < ActiveRecord::Base
 
   end
 
+  def deliver_shared_email
+    self.folder_shares.each do |item|
+      NoticeMailer.sendmail_share(self, item.to_user).deliver
+    end
+  end
+
   attr_accessor :current_user
 
   private
