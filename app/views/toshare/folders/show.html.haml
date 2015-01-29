@@ -10,10 +10,10 @@
         %li= msg
 %table
   %tr
-    %th= shareitems_header_tag(Const.orderby.field.file,  @orderby, toshare_folder_item_path(@folder))
-    %th= shareitems_header_tag(Const.orderby.field.type,  @orderby, toshare_folder_item_path(@folder))
-    %th= shareitems_header_tag(Const.orderby.field.time,  @orderby, toshare_folder_item_path(@folder))
-    %th= shareitems_header_tag(Const.orderby.field.owner,  @orderby, toshare_folder_item_path(@folder))
+    %th= shareitems_header_tag(Const.orderby.field.file,  @orderby, toshare_folder_path(@folder))
+    %th= shareitems_header_tag(Const.orderby.field.type,  @orderby, toshare_folder_path(@folder))
+    %th= shareitems_header_tag(Const.orderby.field.time,  @orderby, toshare_folder_path(@folder))
+    %th= shareitems_header_tag(Const.orderby.field.owner,  @orderby, toshare_folder_path(@folder))
 
   - toshare_folder_items = get_toshare_folder_items(@folder, @orderby)
   - toshare_folder_items.each do |i|

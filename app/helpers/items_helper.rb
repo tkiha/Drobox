@@ -11,7 +11,7 @@ module ItemsHelper
 
   def toshare_item_link_tag(item)
     if item.kind_of?(Folder)
-      return link_to item.name, toshare_folder_item_path(item)
+      return link_to item.name, toshare_folder_path(item)
     end
 
     if item.kind_of?(Upfile)

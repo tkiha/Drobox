@@ -36,11 +36,7 @@ Rails.application.routes.draw do
     resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show] do
       member do
         post :move, :copy
-        # resources :shares にしたい
         resource :foldershares, only: [:new, :update, :destroy]
-        #get :newshares, to: 'foldershares#new'
-        #patch :updateshares, to: 'foldershares#update'
-        #delete :destroyshares, to: 'foldershares#destroy'
         namespace 'toshare' do
           get :show, to: 'subfolders#show'
         end
@@ -53,8 +49,8 @@ Rails.application.routes.draw do
   end
 
   namespace 'toshare' do
-    resource :items, only: [:show] # resources :items, only: [:index] 上と同じにしたい
-    resources :folder_items, only: [:show] # folders にしたい
+    resources :items, only: [:index]
+    resources :folders, only: [:show]
   end
 
   resources :events, only: [:index]
