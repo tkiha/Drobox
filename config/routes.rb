@@ -12,10 +12,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # idを省略可能とした。省略時はroot扱いとなる
-  # get 'items(/:id)' => 'folders#show', as: 'items', defaults: {id: nil} # folders の show でOK
-  get 'search(/:id)' => 'folders#search', as: 'search_folder', defaults:  {id: nil} # => folders の member に移動
-
   # folder_idはどのフォルダ一覧へ戻るかを示すためのキー。省略可能。省略時はrootへ戻る事になる
   get 'find(/:folder_id)' => 'find#new', as: 'find', defaults: {folder_id: nil}
   post 'find(/:folder_id)' => 'find#show', as: 'find_result', defaults: {folder_id: nil}
