@@ -17,9 +17,9 @@ class UpfilesController < ApplicationController
   def move
     respond_to do |format|
       if @upfile.move(upfile_movecopy_params)
-        format.html { redirect_to items_path(upfile_movecopy_params), notice: '移動しました' }
+        format.html { redirect_to folder_path(upfile_movecopy_params), notice: '移動しました' }
       else
-        format.html { redirect_to items_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
+        format.html { redirect_to folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
       end
     end
   end
@@ -27,9 +27,9 @@ class UpfilesController < ApplicationController
   def copy
     respond_to do |format|
       if @upfile.copy(upfile_movecopy_params)
-        format.html { redirect_to items_path(upfile_movecopy_params), notice: 'コピーしました' }
+        format.html { redirect_to folder_path(upfile_movecopy_params), notice: 'コピーしました' }
       else
-        format.html { redirect_to items_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
+        format.html { redirect_to folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
       end
     end
   end
@@ -52,7 +52,7 @@ class UpfilesController < ApplicationController
     @upfile = @upfiles.build(rec_values)
     respond_to do |format|
       if @upfile.save
-        format.html { redirect_to items_path(@folder), notice: 'ファイルをアップロードしました' }
+        format.html { redirect_to folder_path(@folder), notice: 'ファイルをアップロードしました' }
       else
         format.html { render :new }
       end
@@ -72,7 +72,7 @@ class UpfilesController < ApplicationController
   def destroy
     @upfile.destroy
     respond_to do |format|
-      format.html { redirect_to items_path(@folder), notice: 'ファイルを削除しました' }
+      format.html { redirect_to folder_path(@folder), notice: 'ファイルを削除しました' }
     end
   end
 

@@ -20,7 +20,7 @@ class SubfoldersController < ApplicationController
 
     respond_to do |format|
       if @folder.save
-        format.html { redirect_to items_path(@parent_folder), notice: 'フォルダを作成しました' }
+        format.html { redirect_to folder_path(@parent_folder), notice: 'フォルダを作成しました' }
       else
         format.html { render :new }
       end
@@ -30,9 +30,9 @@ class SubfoldersController < ApplicationController
   def move
     respond_to do |format|
       if @folder.deepmove(folder_movecopy_params)
-        format.html { redirect_to items_path(folder_movecopy_params), notice: '移動しました' }
+        format.html { redirect_to folder_path(folder_movecopy_params), notice: '移動しました' }
       else
-        format.html { redirect_to items_path(@parent_folder.id) , notice: @folder.errors.messages[:parent_folder_id].join }
+        format.html { redirect_to folder_path(@parent_folder.id) , notice: @folder.errors.messages[:parent_folder_id].join }
       end
     end
   end
@@ -40,9 +40,9 @@ class SubfoldersController < ApplicationController
   def copy
     respond_to do |format|
       if @folder.deepcopy(folder_movecopy_params)
-        format.html { redirect_to items_path(folder_movecopy_params), notice: 'コピーしました' }
+        format.html { redirect_to folder_path(folder_movecopy_params), notice: 'コピーしました' }
       else
-        format.html { redirect_to items_path(@parent_folder.id) , notice: @folder.errors.messages[:parent_folder_id].join }
+        format.html { redirect_to folder_path(@parent_folder.id) , notice: @folder.errors.messages[:parent_folder_id].join }
       end
     end
   end
@@ -59,7 +59,7 @@ class SubfoldersController < ApplicationController
 
   def destroy
     @folder.destroy
-    redirect_to items_path(@parent_folder), notice: 'フォルダを削除しました'
+    redirect_to folder_path(@parent_folder), notice: 'フォルダを削除しました'
   end
 
   private

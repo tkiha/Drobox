@@ -24,7 +24,7 @@ class FoldersharesController < ApplicationController
     @folder.folder_shares.destroy_all
     Event.create(event: "フォルダ#{@folder.name}の共有を解除しました",
              user_id: current_user.id)
-    redirect_to fromshare_items_path, notice: '共有解除しました'
+    redirect_to fromshare_folder_path, notice: '共有解除しました'
   end
 
   private

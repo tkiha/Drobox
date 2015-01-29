@@ -1,7 +1,7 @@
 module ItemsHelper
   def item_link_tag(item)
     if item.kind_of?(Folder)
-      return link_to item.name, items_path(item)
+      return link_to item.name, folder_path(item)
     end
 
     if item.kind_of?(Upfile)
@@ -86,7 +86,7 @@ module ItemsHelper
 
     field_name << arrow
 
-    link_to field_name, items_path(folder,
+    link_to field_name, folder_path(folder,
       f: field,
       o: next_orderby,
     )

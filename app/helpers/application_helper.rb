@@ -16,7 +16,7 @@ module ApplicationHelper
   def family_folders_html(families)
     content_tag(:folder_tree) do
       unless families[:parent].blank?
-        concat link_to(families[:parent][:name], 
+        concat link_to(families[:parent][:name],
                        search_folder_path(families[:parent][:id]),
                        { class: 'search_folder',remote: true }
                       )
@@ -61,7 +61,7 @@ module ApplicationHelper
     folder.all_parents(parents)
     content_tag(:folders) do
       parents.each_with_index.reverse_each do |f,index|
-        concat link_to(f.name,items_path(f))
+        concat link_to(f.name, folder_path(f))
         concat '  ->  ' if index!=0
       end
     end
