@@ -1,4 +1,4 @@
-module Items_orderby
+module ItemsOrderby
   extend ActiveSupport::Concern
 
   included do

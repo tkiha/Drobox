@@ -1,5 +1,5 @@
 class Toshare::FoldersController < ApplicationController
-  include Items_orderby
+  include ItemsOrderby
   before_filter :authenticate_user!
   before_action :set_orderby, only: [:show]
   before_action :set_folder
