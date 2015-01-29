@@ -51,6 +51,7 @@ gem 'rails-i18n'
 gem 'settingslogic'
 gem 'nested_form'
 gem 'kaminari'
+gem "letter_opener", "~> 1.1.0"
 
 group :development, :test do
     gem 'hirb'
