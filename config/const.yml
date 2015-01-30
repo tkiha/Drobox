@@ -18,5 +18,4 @@ event_type:
   move: 4
   fromshare: 5
   fromshare_destroy: 6
-  toshare: 7
-  download: 8
+  download: 7

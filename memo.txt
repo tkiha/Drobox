@@ -36,3 +36,4 @@ rails g mailer NoticeMailer sendmail_share
 
 rails generate migration AddColumnsToEvents folder_id:integer upfile_id:integer
 rails generate migration AddEventTypeToEvents event_type:integer
+rails generate migration AddNamesToEvents folder_name:text upfile_name:text

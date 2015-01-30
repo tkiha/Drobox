@@ -9,7 +9,7 @@
 
   - @events.each do |event|
     %tr
-      %td= event.event
+      %td= event_text(event)
       %td= get_disp_update_time(event)
 %hr
 = paginate @events, :window => 2

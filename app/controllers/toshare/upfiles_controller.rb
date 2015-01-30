@@ -7,10 +7,7 @@ class Toshare::UpfilesController < ApplicationController
 
   def download
     send_data(@upfile.file_binary, filename: @upfile.name)
-    Event.create(event: "ファイル#{@upfile.name}をダウンロードしました",
-                   user_id: current_user.id)
-    Event.create(event: "ファイル#{@upfile.name}が#{current_user.email}様にダウンロードされました",
-                   user_id: @upfile.user_id)
+    @upfile.add_event(Const.event_type.download, current_user.id)
   end
 
   private

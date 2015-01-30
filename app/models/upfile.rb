@@ -59,6 +59,7 @@ class Upfile < ActiveRecord::Base
 
   def add_event(event_type, user_id)
     Event.create(upfile_id: self.id,
+                 upfile_name: self.name,
                  event_type: event_type,
                  user_id: user_id
                  )

@@ -20,16 +20,13 @@ class Folder < ActiveRecord::Base
   validates :user_id, presence: true
 
   after_create  -> {
-    Event.create(event: "フォルダ#{self.name}を作成しました",
-                 user_id: self.user_id)
+    add_event(Const.event_type.create, self.user_id)
   }
   after_update  -> {
-    Event.create(event: "フォルダ#{self.name}を更新しました",
-                 user_id: self.user_id)
+    add_event(Const.event_type.update, self.user_id)
   }
   after_destroy -> {
-    Event.create(event: "フォルダ#{self.name}を削除しました",
-                 user_id: self.user_id)
+    add_event(Const.event_type.destroy, self.user_id)
   }
 
   # before_save :tes
@@ -82,8 +79,7 @@ class Folder < ActiveRecord::Base
       end
       self.parent_folder_id = moveto_folder_id
       self.save!
-      Event.create!(event: "フォルダ#{self.name}を移動しました",
-                   user_id: self.user_id)
+      add_event(Const.event_type.move, self.user_id)
     end
       true
     rescue => e
@@ -112,8 +108,7 @@ class Folder < ActiveRecord::Base
       copyfolder = self.dup
       copyfolder.parent_folder_id = copyto_folder_id
       copyfolder.save!
-      Event.create!(event: "フォルダ#{self.name}をコピーしました",
-                   user_id: self.user_id)
+      add_event(Const.event_type.copy, self.user_id)
       self.copyall(copyfolder)
     end
       true
@@ -122,20 +117,18 @@ class Folder < ActiveRecord::Base
       false
   end
 
-  def cepyall(copyto_folder)
+  def copyall(copyto_folder)
     self.upfiles.each do |upfile|
       copyfile = upfile.dup
       copyfile.folder_id = copyto_folder.id
       copyfile.save!
-      Event.create!(event: "ファイル#{upfile.name}をコピーしました",
-                   user_id: upfile.user_id)
+      upfile.add_event(Const.event_type.copy, upfile.user_id)
     end
     self.sub_folders.each do |subfolder|
       copyfolder = subfolder.dup
       copyfolder.parent_folder_id = copyto_folder.id
       copyfolder.save!
-      Event.create!(event: "フォルダ#{subfolder.name}をコピーしました",
-                   user_id: subfolder.user_id)
+      add_event(Const.event_type.copy, subfolder.user_id)
       subfolder.copyall(copyfolder)
     end
 
@@ -145,6 +138,14 @@ class Folder < ActiveRecord::Base
     self.folder_shares.each do |item|
       NoticeMailer.sendmail_share(self, item.to_user).deliver
     end
+  end
+
+  def add_event(event_type, user_id)
+    Event.create(folder_id: self.id,
+                 folder_name: self.name,
+                 event_type: event_type,
+                 user_id: user_id
+                 )
   end
 
   # attr_accessor :current_user
