@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130005034) do
+ActiveRecord::Schema.define(version: 20150130013206) do
 
   create_table "events", force: true do |t|
     t.text     "event"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150130005034) do
     t.datetime "updated_at"
     t.integer  "folder_id"
     t.integer  "upfile_id"
+    t.integer  "event_type"
   end
 
   create_table "file_share_tos", force: true do |t|

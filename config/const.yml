@@ -10,4 +10,13 @@ orderby:
     type: 'type'
     time: 'time'
     owner: 'owner'
-
+event_type:
+  copy: 0
+  create: 1
+  update: 2
+  destroy: 3
+  move: 4
+  fromshare: 5
+  fromshare_destroy: 6
+  toshare: 7
+  download: 8

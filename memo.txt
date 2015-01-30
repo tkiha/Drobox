@@ -35,3 +35,4 @@ rails g scaffold_controller upfile
 rails g mailer NoticeMailer sendmail_share
 
 rails generate migration AddColumnsToEvents folder_id:integer upfile_id:integer
+rails generate migration AddEventTypeToEvents event_type:integer

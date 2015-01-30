@@ -13,16 +13,13 @@ class Upfile < ActiveRecord::Base
   validates :folder_id, presence: true
 
   after_create  -> {
-    Event.create(event: "ファイル#{self.name}を追加しました",
-                 user_id: self.user_id)
+    add_event(Const.event_type.create, self.user_id)
   }
   after_update  -> {
-    Event.create(event: "ファイル#{self.name}を更新しました",
-                 user_id: self.user_id)
+    add_event(Const.event_type.update, self.user_id)
   }
   after_destroy -> {
-    Event.create(event: "ファイル#{self.name}を削除しました",
-                 user_id: self.user_id)
+    add_event(Const.event_type.destroy, self.user_id)
   }
 
   def move(moveto_folder_id)
@@ -33,8 +30,7 @@ class Upfile < ActiveRecord::Base
     self.transaction do
       self.folder_id = moveto_folder_id
       self.save!
-      Event.create!(event: "ファイル#{self.name}を移動しました",
-                   user_id: self.user_id)
+      add_event(Const.event_type.move, self.user_id)
     end
     true
   rescue => e
@@ -47,8 +43,7 @@ class Upfile < ActiveRecord::Base
       copyfile = self.dup
       copyfile.folder_id = copyto_folder_id
       copyfile.save!
-      Event.create!(event: "ファイル#{self.name}をコピーしました",
-                   user_id: self.user_id)
+      add_event(Const.event_type.copy, self.user_id)
     end
     true
   rescue => e
@@ -60,6 +55,13 @@ class Upfile < ActiveRecord::Base
     self.file_shares.each do |item|
       NoticeMailer.sendmail_share(self, item.to_user).deliver
     end
+  end
+
+  def add_event(event_type, user_id)
+    Event.create(upfile_id: self.id,
+                 event_type: event_type,
+                 user_id: user_id
+                 )
   end
 
   private

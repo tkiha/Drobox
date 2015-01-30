@@ -36,8 +36,7 @@ class UpfilesController < ApplicationController
 
   def download
     send_data(@upfile.file_binary, filename: @upfile.name)
-    Event.create(event: "ファイル#{@upfile.name}をダウンロードしました",
-                 user_id: current_user.id)
+    @upfile.add_event(Const.event_type.download, current_user.id)
   end
 
   def create
