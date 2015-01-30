@@ -7,9 +7,10 @@ rails g model file_share name:string upfile_id:integer from_user_id:integer to_u
 rails g model event event:text user_id:integer
 
 rake haml:replace_erbs
+rake db:migrate
 
-git remote add Drobox https://github.com/tkiha/Drobox.git
-git push Drobox master
+git remote add origin https://github.com/tkiha/Drobox.git
+git push origin master
 
 
 rails generate migration RemoveNameFromUsers name:string
@@ -33,10 +34,4 @@ rails g scaffold_controller upfile
 
 rails g mailer NoticeMailer sendmail_share
 
-class Upfile < ActiveRecord::Base
-  belongs_to :folder
-  belongs_to :own_user, class_name: :User
-  has_many :file_shares
-  has_many :from_share_users, through: :file_shares, source: :from_user
-
-end
+rails generate migration AddColumnsToEvents folder_id:integer upfile_id:integer
