@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       member do
         get :download
         post :move, :copy
-        resource :fileshares, only: [:new, :update, :destroy]
+        resource :fileshare, only: [:new, :update, :destroy]
         namespace 'toshare' do
           get :show, to: 'upfiles#show'
           get :download, to: 'upfiles#download'
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     resources :folders, controller: :subfolders, only: [:edit, :create, :new, :destroy, :update, :show] do
       member do
         post :move, :copy
-        resource :foldershares, only: [:new, :update, :destroy]
+        resource :foldershare, only: [:new, :update, :destroy]
         namespace 'toshare' do
           get :show, to: 'subfolders#show'
         end
