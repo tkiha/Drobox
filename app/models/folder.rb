@@ -81,10 +81,10 @@ class Folder < ActiveRecord::Base
       self.save!
       add_event(Const.event_type.move, self.user_id)
     end
-      true
-    rescue => e
-      errors.add(:parent_folder_id, "移動できませんでした。#{e.message}")
-      false
+    true
+  rescue => e
+    errors.add(:parent_folder_id, "移動できませんでした。#{e.message}")
+    false
   end
 
   def get_subfolders(subfolders)
@@ -111,10 +111,10 @@ class Folder < ActiveRecord::Base
       add_event(Const.event_type.copy, self.user_id)
       self.copyall(copyfolder)
     end
-      true
-    rescue => e
-      errors.add(:parent_folder_id, "コピーできませんでした。#{e.message}")
-      false
+    true
+  rescue => e
+    errors.add(:parent_folder_id, "コピーできませんでした。#{e.message}")
+    false
   end
 
   def copyall(copyto_folder)
