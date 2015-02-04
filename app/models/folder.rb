@@ -3,7 +3,7 @@ class Folder < ActiveRecord::Base
   belongs_to :own_user, class_name: :User, foreign_key: :user_id
   has_many :folder_shares, inverse_of: :folder, :dependent => :destroy
   accepts_nested_attributes_for :folder_shares, allow_destroy: true
-  has_many :from_share_users, through: :folder_sharess, source: :from_user
+  has_many :from_share_users, through: :folder_shares, source: :from_user
   has_many :to_share_users, through: :folder_shares, source: :to_user
 
   has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id , dependent: :destroy
