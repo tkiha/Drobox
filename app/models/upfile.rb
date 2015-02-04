@@ -1,7 +1,7 @@
 class Upfile < ActiveRecord::Base
   belongs_to :folder
   belongs_to :own_user, class_name: :User, foreign_key: :user_id
-  has_many :file_shares, dependent: :destroy
+  has_many :file_shares, inverse_of: :upfile, dependent: :destroy
   accepts_nested_attributes_for :file_shares, allow_destroy: true
   has_many :from_share_users, through: :file_shares, source: :from_user
   has_many :to_share_users, through: :file_shares, source: :to_user
@@ -64,6 +64,8 @@ class Upfile < ActiveRecord::Base
                  user_id: user_id
                  )
   end
+
+  attr_accessor :current_user
 
   private
     def my_folder

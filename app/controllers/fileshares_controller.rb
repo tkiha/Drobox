@@ -7,6 +7,8 @@ class FilesharesController < ApplicationController
 
   def update
     respond_to do |format|
+      @upfile.current_user = current_user
+
       if @upfile.update(update_params)
         @upfile.deliver_shared_email
         @upfile.add_event(Const.event_type.fromshare, current_user.id)
@@ -29,9 +31,6 @@ class FilesharesController < ApplicationController
     end
 
     def update_params
-      params[:upfile].try("[]",:file_shares_attributes).try(:each) do |item|
-        item.last[:from_user_id] = current_user.id
-      end
       params.require(:upfile).permit(:name, :file_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])
     end
 end
