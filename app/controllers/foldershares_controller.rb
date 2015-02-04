@@ -7,10 +7,7 @@ class FoldersharesController < ApplicationController
 
   def update
     respond_to do |format|
-      # うまくいかなかった
-      # インスタンスが違うので子から親のattr_accessorを参照できなかった
-      # @folder.current_user = current_user
-      # p "---->@folder #{@folder}"
+      @folder.current_user = current_user
 
       if @folder.update(update_params)
         @folder.deliver_shared_email
@@ -34,10 +31,6 @@ class FoldersharesController < ApplicationController
     end
 
     def update_params
-      # 親のオブジェクトに渡してあげることで、このオブジェクトに渡す
-      params[:folder].try("[]", :folder_shares_attributes).try(:each) do |item|
-        item.last[:from_user_id] = current_user.id
-      end
       params.require(:folder).permit(:name, :folder_shares_attributes => [:id, :from_user_id, :to_user_id, :_destroy])
     end
 

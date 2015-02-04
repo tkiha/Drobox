@@ -1,9 +1,9 @@
 class Folder < ActiveRecord::Base
   has_many :upfiles, dependent: :destroy
   belongs_to :own_user, class_name: :User, foreign_key: :user_id
-  has_many :folder_shares, :dependent => :destroy
+  has_many :folder_shares, inverse_of: :folder, :dependent => :destroy
   accepts_nested_attributes_for :folder_shares, allow_destroy: true
-  has_many :from_share_users, through: :folder_shares, source: :from_user
+  has_many :from_share_users, through: :folder_sharess, source: :from_user
   has_many :to_share_users, through: :folder_shares, source: :to_user
 
   has_many :sub_folders, class_name: :Folder, foreign_key: :parent_folder_id , dependent: :destroy
@@ -28,17 +28,6 @@ class Folder < ActiveRecord::Base
   after_destroy -> {
     add_event(Const.event_type.destroy, self.user_id)
   }
-
-  # before_save :tes
-  # def tes
-  #   p "folder before_save --->#{self}"
-  #   p "--->#{self.current_user}"
-  # end
-
-
-  # def disp_update_time
-  #   return self.updated_at.in_time_zone('Tokyo')
-  # end
 
   def get_family_folders
     families = {}
@@ -148,7 +137,7 @@ class Folder < ActiveRecord::Base
                  )
   end
 
-  # attr_accessor :current_user
+  attr_accessor :current_user
 
   private
     def my_parent_folder
