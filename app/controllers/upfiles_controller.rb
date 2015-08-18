@@ -19,7 +19,7 @@ class UpfilesController < ApplicationController
       if @upfile.move(upfile_movecopy_params)
         format.html { redirect_to folder_path(upfile_movecopy_params), notice: '移動しました' }
       else
-        format.html { redirect_to folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
+        format.html { redirect_to folder_path(@folder.id), notice: @upfile.errors.messages[:folder_id].join }
       end
     end
   end
@@ -29,7 +29,7 @@ class UpfilesController < ApplicationController
       if @upfile.copy(upfile_movecopy_params)
         format.html { redirect_to folder_path(upfile_movecopy_params), notice: 'コピーしました' }
       else
-        format.html { redirect_to folder_path(@folder.id) , notice: @upfile.errors.messages[:folder_id].join }
+        format.html { redirect_to folder_path(@folder.id), notice: @upfile.errors.messages[:folder_id].join }
       end
     end
   end
@@ -41,10 +41,10 @@ class UpfilesController < ApplicationController
 
   def create
     upload_file = upfile_params.blank? ? nil : upfile_params[:upload_file]
-    rec_values = {}
+    rec_values  = {}
     if upload_file.present?
       rec_values[:file_binary] = upload_file.read
-      rec_values[:name] = upload_file.original_filename
+      rec_values[:name]        = upload_file.original_filename
     end
     rec_values[:user_id] = current_user.id
 
@@ -76,25 +76,27 @@ class UpfilesController < ApplicationController
   end
 
   private
-    def set_folder
-      @folder = current_user.folders.find(params[:folder_id])
-    end
-    def set_upfiles
-      @upfiles = @folder.upfiles
-    end
-    def set_upfile
-      @upfile = @folder.upfiles.find(params[:id])
-    end
+  def set_folder
+    @folder = current_user.folders.find(params[:folder_id])
+  end
 
-    def upfile_params
-      params.fetch(:upfile,{}).permit(:upload_file)
-    end
+  def set_upfiles
+    @upfiles = @folder.upfiles
+  end
 
-    def upfile_edit_params
-      params.require(:upfile).permit(:name)
-    end
+  def set_upfile
+    @upfile = @folder.upfiles.find(params[:id])
+  end
 
-    def upfile_movecopy_params
-      params.require(:to_folder_id)
-    end
+  def upfile_params
+    params.fetch(:upfile, {}).permit(:upload_file)
+  end
+
+  def upfile_edit_params
+    params.require(:upfile).permit(:name)
+  end
+
+  def upfile_movecopy_params
+    params.require(:to_folder_id)
+  end
 end
